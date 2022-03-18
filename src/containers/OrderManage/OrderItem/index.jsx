@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { updateOrder } from "../../../actions";
+import Moment from "react-moment";
 
 
 function OrderItem(props) {
@@ -50,12 +51,14 @@ function OrderItem(props) {
         <td>{order.nameReceiver}</td>
         <td>{order.phoneReceiver} </td>
         <td >{order.total}</td>
-        <td >{order.status == null ? <span class="badge bg-warning">Chờ xác nhận</span> :
+        <td >{order.status == 0 ? <span class="badge bg-warning">Chờ xác nhận</span> :
         order.status == 1 ? <span class="badge bg-primary">Đã xác nhận</span> :
         order.status == 2 ? <span class="badge bg-info">Đang giao hàng</span> :
         order.status == 3 ? <span class="badge bg-success">Thành công</span> :
         <span class="badge bg-danger">Đã hủy</span>}</td>
-        <td >{order.createdAt}</td>
+        <td >
+          <Moment format="YYYY-MM-DD HH:mm">{order.createdAt}</Moment>
+         </td>
 
         <td>
           <div className="d-flex align-items-center">

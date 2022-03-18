@@ -130,7 +130,7 @@ export const filterOrderByUser = (userId,limit,page) => {
 export const filterOrderByStatus = (status,limit,page) => {
   return async (dispatch) => {
     dispatch({ type: orderConstants.FILTER_ORDER_BY_STATUS_REQUEST });
-    const res = await axios.get(`/api/orders?status=${status}?limit=${limit}&page=${page}`);
+    const res = await axios.get(`/api/orders/filter?limit=${limit}&page=${page}&status=${status}`);
 
     if (res.status === 200) {
       const { dataResponse, message } = res.data;

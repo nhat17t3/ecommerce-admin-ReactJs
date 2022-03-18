@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Moment from "react-moment";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -55,8 +56,8 @@ function VoucherItem(props) {
         <td>{voucher.code} </td>
         <td >{voucher.name}</td>
         <td >{voucher.quantity}</td>
-        <td >{voucher.startAt}</td>
-        <td >{voucher.endAt}</td>
+        <td > <Moment format="YYYY-MM-DD HH:mm">{voucher.startAt}</Moment></td>
+        <td > <Moment format="YYYY-MM-DD HH:mm">{voucher.endAt}</Moment></td>
         <td>
         <label className="switch switch-default switch-pill switch-success mr-2">
             <input

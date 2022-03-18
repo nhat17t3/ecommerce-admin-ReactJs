@@ -44,7 +44,7 @@ function CategoryArticleItem(props) {
       <tr key={categoryArticle.id}>
         <td>{categoryArticle.id}</td>
         <td>{categoryArticle.name} </td>
-        <td>
+        {/* <td>
         <label className="switch switch-default switch-pill switch-success mr-2">
             <input
               type="checkbox"
@@ -60,7 +60,7 @@ function CategoryArticleItem(props) {
             <span className="switch-label" />
             <span className="switch-handle" />
           </label>
-        </td>
+        </td> */}
 
         <td>
           <div className="d-flex align-items-center">
@@ -69,7 +69,7 @@ function CategoryArticleItem(props) {
               className="btn btn-success btn-sm btn-icon-text mr-3"
               onClick={handleEditClick}
             >
-              view
+              Edit
               <i className="typcn typcn-edit btn-icon-append" />
             </button>
             <button

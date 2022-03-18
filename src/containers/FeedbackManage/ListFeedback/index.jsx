@@ -28,7 +28,7 @@ function ListFeedback(props) {
   const [currentPage, setCurrentPage] = useState(
     Number(query.get("page")) || 1
   );
-  const limit = 3;
+  const limit = 7;
 
   useEffect(() => {
     dispatch(getListFeedbackByPage(limit, currentPage - 1));
@@ -41,12 +41,12 @@ function ListFeedback(props) {
   };
 
   const listFeedback = useSelector((state) => state.feedback.listFeedback);
-  const count = useSelector((state) => state.product.count);
+  const count = useSelector((state) => state.feedback.count);
   var countPage = Math.ceil(count / limit);
 
   const handleEditClick = (item) => {
     console.log("Edit: ", item);
-    const editUrl = `/feedbacks/edit/${item.id}`;
+    const editUrl = `/feedbacks/view/${item.id}`;
     // const editUrl = `/feedbacks/add`;
 
     history.push(editUrl);
@@ -70,7 +70,8 @@ function ListFeedback(props) {
       <Layout>
         <div className="content-wrapper">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-1"></div>
+            <div className="col-md-10">
               <div className="card">
                 <div className="card-body ">
                   <h1 className="card-title text-center">
@@ -79,13 +80,15 @@ function ListFeedback(props) {
                   {/* <Link to={"/feedbacks/add"} className="btn btn-info">
                     Thêm phản hồi
                   </Link> */}
-                  <div className="table-responsive pt-3">
-                    <table className="table table-striped project-orders-table">
+                  <div className="table-responsive pt-3 ">
+                    <table className="table table-striped project-orders-table table-borderd">
                       <thead className="thead-dark">
                         <tr>
                           <th className="col-1">ID</th>
                           <th className="col-2">Tên</th>
                           <th className="col-2">Email</th>
+                          <th className="col-2">Điện thoại</th>
+
                           <th className="text-center">Tiêu đề</th>
                           <th className="col-1">Actions</th>
                         </tr>

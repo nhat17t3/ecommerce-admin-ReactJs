@@ -124,7 +124,7 @@ function EditProduct1(props) {
             <div className="col-md-12 grid-margin stretch-card offset-md-0">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title text-center">Cập nhật sản phẩm</h4>
+                  <h3 className=" text-center">Cập nhật sản phẩm</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample row" onSubmit={handleSubmit}>
                     {/* <div className="row">
@@ -187,9 +187,12 @@ function EditProduct1(props) {
                       >
                         <option value={""} hidden></option>
                         {listCategory?.map((item) => {
-                          if (item.parentId != 0)
-                            return <option value={item.id}>{item.name}</option>;
-                          else return null;
+                          // if (item.parentId != 0)
+                          //   return <option value={item.id}>{item.name}</option>;
+                          // else return null;
+
+                          return <option value={item.id}>{item.name}</option>;
+
                         })}
                       </select>
                     </div>
@@ -272,7 +275,7 @@ function EditProduct1(props) {
                       setContents={description}
                       name="description"
                       setOptions={{
-                        height: 200,
+                        height: 500,
                         buttonList: buttonList.complex,
                       }}
                     />
@@ -291,7 +294,7 @@ function EditProduct1(props) {
                         {ingredient}
                       </textarea>
                     </div> */}
-                    <div for="specification">Thành phần</div>
+                    {/* <div for="specification">Thành phần</div>
                     <SunEditor
                       onChange={(content) => setIngredient(content)}
                       setContents={ingredient}
@@ -300,7 +303,7 @@ function EditProduct1(props) {
                         height: 200,
                         buttonList: buttonList.complex,
                       }}
-                    />
+                    /> */}
 
                     {/* <div class="form-group">
                       <label for="specification">Thông số đặc tả</label>
@@ -323,7 +326,7 @@ function EditProduct1(props) {
                       setContents={specification}
                       name="specification"
                       setOptions={{
-                        height: 200,
+                        height: 400,
                         buttonList: buttonList.complex,
                       }}
                     />
@@ -347,11 +350,14 @@ function EditProduct1(props) {
                       <label style={{ display: "block" }}>
                         Hình ảnh chi tiết
                       </label>
+                      {findItem.moreImage?.split(",").map((element)=>{
+                        return  <img src={element} className="mr-5"></img>
+                      })}
                       <input
                         multiple
                         type="file"
                         name="moreImage"
-                        className=""
+                        className="d-block mt-3"
                         onChange={(event) =>
                           setSelectedMoreFile(event.target.files)
                         }
@@ -375,7 +381,7 @@ function EditProduct1(props) {
                       </label>
                     </div>
 
-                    <div class="form-group col-4">
+                    {/* <div class="form-group col-4">
                       <p class="">Sản phẩm mới</p>
                       <label class="toggle-switch toggle-switch-success">
                         <input
@@ -387,9 +393,9 @@ function EditProduct1(props) {
                         />
                         <span class="toggle-slider round"></span>
                       </label>
-                    </div>
+                    </div> */}
                     <div class="form-group col-4">
-                      <p class="">Kích hoạt</p>
+                      <p class="">Hiển thị</p>
                       <label className="switch switch-default switch-pill switch-success mr-2">
                         <input
                           type="checkbox"
@@ -403,9 +409,11 @@ function EditProduct1(props) {
                         <span className="switch-handle" />
                       </label>
                     </div>
+<div className="col-4">
 
+</div>
                     <button type="submit" className="btn btn-primary mr-2">
-                      Thêm
+                      Cập nhật
                     </button>
                     {/* <button className="btn btn-light">Hủy</button> */}
                   </form>

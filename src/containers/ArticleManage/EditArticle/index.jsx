@@ -24,8 +24,13 @@ function EditArticle(props) {
   const [shortDesc, setShortDesc] = useState("");
   const [description, setDescription] = useState("");
   const [categoryArticleId, setCategoryArticleId] = useState("");
-  const [isHot, setIsHot] = useState(true);
+  // const [isHot, setIsHot] = useState(true);
   const [isActive, setIsActive] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [image, setImage] = useState("");
+  const changeHandlerFile = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
   useEffect(() => {
     dispatch(getListCategoryArticle());
@@ -47,23 +52,33 @@ function EditArticle(props) {
       setShortDesc(findItem.shortDesc);
       setDescription(findItem.description);
       setCategoryArticleId(findItem.categoryArticle?.id);
-      setIsHot(findItem.isHot);
+      // setIsHot(findItem.isHot);
       setIsActive(findItem.isActive);
+      setImage(findItem.image);
     }
   }, [findItem]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = {
-      name,
-      shortDesc,
-      description,
-      categoryArticleId,
-      isHot,
-      isActive,
-    };
+    // const form = {
+    //   name,
+    //   shortDesc,
+    //   description,
+    //   categoryArticleId,
+    //   isHot,
+    //   isActive,
+    // };
 
-    await dispatch(updateArticle(+articleId, form));
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("shortDesc", shortDesc);
+    formData.append("description", description);
+    formData.append("categoryArticleId", categoryArticleId);
+    // formData.append("isHot", isHot);
+    formData.append("isActive", isActive);
+    if (selectedFile !== null) formData.append("image", selectedFile);
+
+    await dispatch(updateArticle(+articleId, formData));
 
     history.goBack();
   };
@@ -76,7 +91,7 @@ function EditArticle(props) {
             <div className="col-md-12 grid-margin stretch-card ">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Thêm article</h4>
+                  <h3 className="card-title text-center">Cập nhật bài viết</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -106,7 +121,7 @@ function EditArticle(props) {
                         required
                       >
                         <option value={""} hidden>
-                          khong có gì
+                          --chọn danh mục--
                         </option>
                         {listCate?.map((item) => (
                           <option value={item.id}>{item.name}</option>
@@ -155,9 +170,21 @@ function EditArticle(props) {
                       }}
                     />
 
+                    <div className="form-group col-12">
+                      <img src={image}></img>
+                      <label style={{ display: "block" }}>Hình ảnh chính</label>
+                      <input
+                        type="file"
+                        name="image"
+                        className=""
+                        onChange={(event) =>
+                          setSelectedFile(event.target.files[0])
+                        }
+                        // required
+                      />
+                    </div>
 
-
-<div class="form-group">
+                      {/* <div class="form-group">
                       <p class="">bài viết HOT</p>
                     
                       <label className="switch switch-default switch-pill switch-danger mr-2">
@@ -172,7 +199,7 @@ function EditArticle(props) {
                         <span className="switch-label" />
                         <span className="switch-handle" />
                       </label>
-                    </div>
+                    </div> */}
 
                     <div class="form-group">
                       <p class="">kích hoạt</p>
@@ -191,7 +218,7 @@ function EditArticle(props) {
                     </div>
 
                     <button type="submit" className="btn btn-primary mr-2">
-                      Thêm
+                      Cập nhật
                     </button>
                     {/* <button className="btn btn-light">Hủy</button> */}
                   </form>

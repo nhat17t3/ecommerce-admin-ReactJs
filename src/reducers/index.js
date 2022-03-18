@@ -15,6 +15,7 @@ import favouriteReducer from "./favourite.reducers"
 import orderReducer from "./order.reducers"
 import userReducer from "./user.reducers"
 import transportReducer from "./transport.reducers"
+import statisticsReducer from "./statistics.reducers"
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -32,7 +33,8 @@ const rootReducer = combineReducers({
   favourite : favouriteReducer,
   order : orderReducer,
   user : userReducer,
-  transport : transportReducer
+  transport : transportReducer,
+  statistics : statisticsReducer
 });
 
 export default rootReducer;

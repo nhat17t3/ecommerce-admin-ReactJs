@@ -100,7 +100,7 @@ function AddProduct(props) {
             <div className="col-md-12 grid-margin stretch-card offset-md-0">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title text-center">Thêm sản phẩm</h4>
+                  <h3 className=" text-center">Thêm sản phẩm</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample row" onSubmit={handleSubmit}>
                     {/* <div className="row">
@@ -145,7 +145,7 @@ function AddProduct(props) {
                         value={brandId}
                         required
                       >
-                        <option value={""} hidden></option>
+                        <option value={""} hidden> --chọn thương hiệu--</option>
                         {listBrand?.map((item) => (
                           <option value={item.id}>{item.name}</option>
                         ))}
@@ -161,11 +161,13 @@ function AddProduct(props) {
                         value={categoryId}
                         required
                       >
-                        <option value={""} hidden></option>
+                        <option value={""} hidden>--chọn danh mục--</option>
                         {listCategory?.map((item) => {
-                          if (item.parentId != 0)
-                            return <option value={item.id}>{item.name}</option>;
-                          else return null;
+                          // if (item.parentId != 0)
+                          //   return <option value={item.id}>{item.name}</option>;
+                          // else return null;
+
+                          return <option value={item.id}>{item.name}</option>;
                         })}
                       </select>
                     </div>
@@ -258,26 +260,13 @@ function AddProduct(props) {
                       setContents={description}
                       name="description"
                       setOptions={{
-                        height: 200,
+                        height: 500,
                         buttonList: buttonList.complex,
                       }}
                     />
 
-                    {/* <div class="form-group">
-                      <label for="ingredient">Thành phần</label>
-                      <textarea
-                        class="form-control"
-                        id="ingredient"
-                        rows="4"
-                        name="ingredient"
-                        // value={ingredient}
-                        onChange={(e) => setIngredient(e.target.value)}
-                        required
-                      >
-                        {ingredient}
-                      </textarea>
-                    </div> */}
-                    <div for="specification">Thành phần</div>
+                   
+                    {/* <div for="specification">Thành phần</div>
                     <SunEditor
                       onChange={(content) => setIngredient(content)}
                       setContents={ingredient}
@@ -286,22 +275,9 @@ function AddProduct(props) {
                         height: 200,
                         buttonList: buttonList.complex,
                       }}
-                    />
+                    /> */}
 
-                    {/* <div class="form-group">
-                      <label for="specification">Thông số đặc tả</label>
-                      <textarea
-                        class="form-control"
-                        id="specification"
-                        rows="4"
-                        name="specification"
-                        // value={ingredient}
-                        onChange={(e) => setSpecification(e.target.value)}
-                        required
-                      >
-                        {ingredient}
-                      </textarea>
-                    </div> */}
+                
 
                     <div for="specification">Thông số đặc tả</div>
                     <SunEditor
@@ -309,7 +285,7 @@ function AddProduct(props) {
                       setContents={specification}
                       name="specification"
                       setOptions={{
-                        height: 200,
+                        height: 400,
                         buttonList: buttonList.complex,
                       }}
                     />
@@ -338,7 +314,7 @@ function AddProduct(props) {
                         onChange={(event) =>
                           setSelectedMoreFile(event.target.files)
                         }
-                        // required
+                        required
                       />
                     </div>
 
@@ -358,7 +334,7 @@ function AddProduct(props) {
                       </label>
                     </div>
 
-                    <div class="form-group col-4">
+                    {/* <div class="form-group col-4">
                       <p class="">Sản phẩm mới</p>
                       <label class="toggle-switch toggle-switch-success">
                         <input
@@ -370,9 +346,9 @@ function AddProduct(props) {
                         />
                         <span class="toggle-slider round"></span>
                       </label>
-                    </div>
+                    </div> */}
                     <div class="form-group col-4">
-                      <p class="">Kích hoạt</p>
+                      <p class=""> Hiển thị</p>
                       <label className="switch switch-default switch-pill switch-success mr-2">
                         <input
                           type="checkbox"
@@ -386,7 +362,9 @@ function AddProduct(props) {
                         <span className="switch-handle" />
                       </label>
                     </div>
+<div className="col-4">
 
+</div>
                     <button type="submit" className="btn btn-primary mr-2">
                       Thêm
                     </button>

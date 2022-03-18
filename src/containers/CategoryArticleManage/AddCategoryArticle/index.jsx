@@ -34,7 +34,7 @@ function AddCategoryArticle(props) {
             <div className="col-md-6 grid-margin stretch-card offset-md-3">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Thêm danh mục bài viết</h4>
+                  <h3 className="card-title text-center">Thêm danh mục bài viết</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -53,7 +53,7 @@ function AddCategoryArticle(props) {
 
                     
 
-                    <div class="form-group">
+                    {/* <div class="form-group">
                       <p class="">Kích hoạt</p>
                       <label className="switch switch-default switch-pill switch-success mr-2">
                         <input
@@ -67,7 +67,7 @@ function AddCategoryArticle(props) {
                         <span className="switch-label" />
                         <span className="switch-handle" />
                       </label>
-                    </div>
+                    </div> */}
 
                     <button type="submit" className="btn btn-primary mr-2">
                       Thêm

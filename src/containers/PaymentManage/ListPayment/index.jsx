@@ -47,7 +47,7 @@ function ListPayment(props) {
             <div className="col-md-8">
               <div className="card">
                 <div className="card-body ">
-                  <h3 className="text-center">Quản lí thanh toán</h3>
+                  <h3 className="text-center">Quản lí phương thức thanh toán</h3>
                   <Link to={"/payments/add"} className="btn btn-info">
                     Thêm thanh toán
                   </Link>
@@ -55,11 +55,11 @@ function ListPayment(props) {
                     <table className="table table-striped project-orders-table">
                       <thead className="thead-dark">
                         <tr>
-                          <th className="ml-5 col-1">ID</th>
+                          <th className="ml-5 col-2">ID</th>
                           <th>Tên</th>
                           {/* <th>Mô tả</th> */}
-                          <th className="col-1">Kích hoạt</th>
-                          <th className="col-1 text-center">Actions</th>
+                          <th className="col-2">Kích hoạt</th>
+                          <th className="col-2 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody>

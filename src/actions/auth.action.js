@@ -1,5 +1,6 @@
 import axios from "../helpers/axios";
 import { authConstants } from "../constants/auth.constants";
+import { toast } from "react-toastify";
 
 export const login = (user) => {
   return async (dispatch) => {
@@ -25,14 +26,14 @@ export const login = (user) => {
 
         dispatch(getInformation({token}));
       } else {
-        if (res.status === 400) {
+        
           dispatch({
             type: authConstants.LOGIN_FAILURE,
             payload: {
               error: "login failed",
             },
           });
-        }
+        
       }
     } catch (error) {
       dispatch({
@@ -175,7 +176,7 @@ export const changePassword = (pass) => {
   return async (dispatch) => {
     dispatch({ type: authConstants.CHANGE_PASSWORD_REQUEST });
 
-    const res = await axios.put(`/api/auth/password`, pass);
+    const res = await axios.post(`/api/auth/updatePassword?newPassword=${pass.newPass}&oldPassword=${pass.oldPass}`);
     // const res = await axios.put(`admin/${data.id}/change-password`, { pass });
     if (res.status === 200) {
       const { message } = res.data.message;
@@ -185,6 +186,7 @@ export const changePassword = (pass) => {
           message: message,
         },
       });
+      toast.success("cập nhật mật khẩu thành công")
     } else {
       const { message } = res.data.message;
       dispatch({
@@ -193,6 +195,7 @@ export const changePassword = (pass) => {
           error: message,
         },
       });
+      toast.error("cập nhật mật khẩu thất bại")
     }
   };
 };

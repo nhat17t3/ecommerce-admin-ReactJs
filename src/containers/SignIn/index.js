@@ -82,9 +82,9 @@ function Login(props) {
                           <i className="input-helper" />
                         </label>
                       </div> */}
-                      <a href="#" className="auth-link text-black">
+                      {/* <a href="#" className="auth-link text-black">
                         Quên mật khẩu ?
-                      </a>
+                      </a> */}
                     </div>
                     {/* <div className="mb-2">
                 <button type="button" className="btn btn-block btn-facebook auth-form-btn">

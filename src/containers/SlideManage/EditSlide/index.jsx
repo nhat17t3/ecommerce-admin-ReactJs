@@ -64,7 +64,7 @@ function EditSlide(props) {
           <div className="col-md-6 grid-margin stretch-card offset-md-3">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Thêm Slide</h4>
+                <h3 className="card-title text-center">Cập nhật Slide</h3>
                 {/* <p className="card-description">Basic form layout</p> */}
                 <form className="forms-sample" onSubmit={handleSubmit}>
                   <div className="form-group">
@@ -140,7 +140,7 @@ function EditSlide(props) {
                   </div>
 
                   <button type="submit" className="btn btn-primary mr-2">
-                    Thêm
+                    Cập nhật
                   </button>
                   {/* <button className="btn btn-light">Hủy</button> */}
                 </form>

@@ -115,7 +115,7 @@ export const updateCategory = (form) => {
       });
       toast.success("cập nhật danh mục sản phẩm thành công");
 
-      // dispatch(getListCategory());
+      dispatch(getListCategory());
     } else {
       const { dataResponse, message } = res.data;
 

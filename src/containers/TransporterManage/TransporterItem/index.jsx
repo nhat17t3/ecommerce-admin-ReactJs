@@ -31,7 +31,8 @@ function TransporterItem(props) {
   const handleActiveClick = () => {
     const form = {
       name : transporter.name,
-      link : transporter.link,
+      description : transporter.description,
+      fee : transporter.fee,
       isActive : !isActive
       };
     console.log(form,"edit");
@@ -45,11 +46,12 @@ function TransporterItem(props) {
       <tr key={transporter.id}>
         <td>{transporter.id}</td>
         <td>{transporter.name} </td>
-        <td >{transporter.link}</td>
+        <td >{transporter.fee} VNĐ</td>
         <td>
-          <label class="toggle-switch toggle-switch-success" >
+          <label className="switch switch-default switch-pill switch-success mr-2">
             <input
               type="checkbox"
+              className="switch-input"
               name="isActive"
               value={isActive}
               onChange={() => {
@@ -58,9 +60,10 @@ function TransporterItem(props) {
               }}
               checked={isActive}
             />
-            <span class="toggle-slider round"></span>
+            <span className="switch-label" />
+            <span className="switch-handle" />
           </label>
-        </td>
+        </td> 
 
         <td>
           <div className="d-flex align-items-center">

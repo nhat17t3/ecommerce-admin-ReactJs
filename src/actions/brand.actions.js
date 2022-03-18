@@ -50,7 +50,7 @@ export const createBrand = (form) => {
         },
       });
       toast.success("tạo thương hiệu thành công");
-      // dispatch(getListBrand());
+      dispatch(getListBrand());
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -115,7 +115,7 @@ export const updateBrand = (id,form) => {
       });
       toast.success("cập nhật thương hiệu thành công");
 
-      // dispatch(getListBrand());
+      dispatch(getListBrand());
     } else {
       const { dataResponse, message } = res.data;
 

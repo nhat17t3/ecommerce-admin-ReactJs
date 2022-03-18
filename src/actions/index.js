@@ -15,4 +15,6 @@ export * from "./transport.actions"
 export * from "./transporter.actions"
 export * from "./user.actions"
 export * from "./voucher.actions"
+export * from "./statistics.actions"
+
 

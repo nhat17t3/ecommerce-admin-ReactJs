@@ -53,10 +53,10 @@ function ListBrand(props) {
                     <table className="table table-striped project-orders-table ">
                       <thead className="thead-dark">
                         <tr>
-                          <th className="col-2">ID</th>
-                          <th className="col-2">Ảnh</th>
+                          <th className="col-3">ID</th>
+                          <th className="col-3">Ảnh</th>
                           <th>Tên</th>
-                          <th className="col-2">Kích hoạt</th>
+                          {/* <th className="col-2">Kích hoạt</th> */}
                           <th className="text-center col-1">Actions</th>
                         </tr>
                       </thead>

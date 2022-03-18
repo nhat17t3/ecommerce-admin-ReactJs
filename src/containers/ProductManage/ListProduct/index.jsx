@@ -94,11 +94,19 @@ function ListProduct(props) {
 
 
   const handleSearch = (e) => {
+  
     e.preventDefault();
-    console.log(searchFeild, "search");
-    dispatch(searchListProductByName(searchFeild, limit, 0));
-    history.push(`?search=${searchFeild}&page=${1}`);
     setCurrentPage(1);
+    console.log(searchFeild, "search");
+    if(searchFeild.trim()!= ""){
+      // history.push(`?search=${searchFeild}&page=${1}`); 
+      dispatch(searchListProductByName(searchFeild, limit, 0));
+
+    } 
+    else {
+      dispatch(getListProductByPage(limit, 0));
+      history.push('/products/list')
+    }
   };
   return (
     <>
@@ -147,7 +155,7 @@ function ListProduct(props) {
                     <table className="table table-striped project-orders-table table-bordered">
                     <thead className="thead-dark">
                         <tr>
-                          <th className="">ID</th>
+                          <th className="col-1">ID</th>
                           <th className="col-1">Ảnh</th>
                           <th className="col-1">Mã</th>
                           <th className="text-center">Tên</th>

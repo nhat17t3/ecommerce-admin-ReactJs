@@ -45,6 +45,8 @@ import SunEditor from "./components/SunEditor";
 
 import ListOrder from "./containers/OrderManage/ListOrder";
 import EditOrder from "./containers/OrderManage/EditOrder";
+import ViewUser from "./containers/UserManage/ViewUser";
+import ChangePass from "./containers/ChangePass";
 
 
 
@@ -97,7 +99,7 @@ function App() {
         <Route path="/slides/add" component={AddSlide} />
 
         <Route path="/feedbacks/list" component={ListFeedback} />
-        <Route path="/feedbacks/edit/:feedbackId" component={EditFeedback} />
+        <Route path="/feedbacks/view/:feedbackId" component={EditFeedback} />
         <Route path="/feedbacks/add" component={AddFeedback} />
 
         <Route path="/transporters/list" component={ListTransporter} />
@@ -117,10 +119,14 @@ function App() {
         <Route path="/articles/add" component={AddArticle} />
 
         <Route path="/users/list" component={ListUser} />
+        <Route path="/users/view/:userId" component={ViewUser} />
 
 
         <Route path="/orders/list" component={ListOrder} />
         <Route path="/orders/edit/:orderId" component={EditOrder} />
+
+        <Route path="/change-pass" component={ChangePass} />
+
 
 
         

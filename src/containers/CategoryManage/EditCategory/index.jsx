@@ -44,7 +44,6 @@ function EditCategory(props) {
     const form = {
       id: Number(categoryId),
       name,
-      slug: "",
       isActive,
       parentId : 0
       };
@@ -63,7 +62,7 @@ function EditCategory(props) {
           <div className="col-md-6 grid-margin stretch-card offset-md-3">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Cập nhật danh mục cha</h4>
+                <h3 className="mb-3 text-center">Cập nhật danh mục sản phẩm</h3>
                 {/* <p className="card-description">Basic form layout</p> */}
                 <form className="forms-sample" onSubmit={handleSubmit}>
                   <div className="form-group">
@@ -98,7 +97,7 @@ function EditCategory(props) {
                       </select>
                     </div> */}
 
-                  <div class="form-group">
+                  {/* <div class="form-group">
                     <p class="">Kích hoạt</p>
                     <label className="switch switch-default switch-pill switch-success mr-2">
                         <input
@@ -112,7 +111,7 @@ function EditCategory(props) {
                         <span className="switch-label" />
                         <span className="switch-handle" />
                       </label>
-                  </div>
+                  </div> */}
 
                   <button type="submit" className="btn btn-primary mr-2">
                     Cập nhật

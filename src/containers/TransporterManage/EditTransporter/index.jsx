@@ -19,7 +19,8 @@ function EditTransporter(props) {
   const { transporterId } = useParams();
 
   const [name, setName] = useState("");
-  const [link, setLink] = useState("");
+   const [description, setDescription] = useState("");
+  const [fee, setFee] = useState(0);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -31,7 +32,8 @@ function EditTransporter(props) {
   useEffect(() => {
     if (findItem) {
       setName(findItem.name);
-      setLink(findItem.link);
+      setDescription(findItem.description);
+      setFee(findItem.fee);
       setIsActive(findItem.isActive);
     }
   }, [findItem]);
@@ -40,7 +42,8 @@ function EditTransporter(props) {
     e.preventDefault();
     const form = {
       name,
-      link,
+      description,
+      fee,
       isActive,
     };
 
@@ -56,11 +59,11 @@ function EditTransporter(props) {
             <div className="col-md-6 grid-margin stretch-card offset-md-3">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Thêm đơn vị vận chuyển</h4>
+                  <h4 className="card-title">Cập nhật phương thức giao hàng</h4>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
-                      <label htmlFor="name">Tên đơn vị vận chuyển</label>
+                      <label htmlFor="name">Tên</label>
                       <input
                         type="text"
                         name="name"
@@ -74,31 +77,49 @@ function EditTransporter(props) {
                     </div>
 
                     <div className="form-group">
-                      <label htmlFor="name">Link tra cứu</label>
+                      <label htmlFor="name">Phí vận chuyển </label>
                       <input
-                        type="text"
-                        name="link"
+                        type="number"
+                        name="fee"
                         className="form-control"
-                        id="link"
+                        id="fee"
                         placeholder=""
-                        value={link}
-                        onChange={(e) => setLink(e.target.value)}
+                        value={fee}
+                        onChange={(e) => setFee(e.target.value)}
                         required
                       />
+                    </div>
+
+                    <div class="form-group ">
+                      <label for="description">Mô tả </label>
+                      <textarea
+                        class="form-control"
+                        id="description"
+                        rows="4"
+                        name="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                      >
+                        {description}
+                      </textarea>
                     </div>
 
                    
                     <div class="form-group">
                       <p class="">Kích hoạt</p>
-                      <label class="toggle-switch toggle-switch-success">
+                    
+                      <label className="switch switch-default switch-pill switch-success mr-2">
                         <input
                           type="checkbox"
+                          className="switch-input"
                           name="isActive"
                           value={isActive}
                           onChange={() => setIsActive(!isActive)}
                           checked={isActive}
                         />
-                        <span class="toggle-slider round"></span>
+                        <span className="switch-label" />
+                        <span className="switch-handle" />
                       </label>
                     </div>
 

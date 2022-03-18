@@ -47,7 +47,8 @@ function ListSubCategory(props) {
       <Layout>
         <div className="content-wrapper">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-2"></div>
+            <div className="col-md-8">
               <div className="card">
                 <div className="card-body ">
                   <h1 className="card-title text-center">Quản lí danh mục con</h1>
@@ -61,7 +62,7 @@ function ListSubCategory(props) {
                           <th className="ml-5">ID</th>
                           <th>Tên</th>
                           <th>Danh mục cha</th>
-                          <th className="col-2">Kích hoạt</th>
+                          {/* <th className="col-2">Kích hoạt</th> */}
                           <th className="text-center col-1">Actions</th>
                         </tr>
                       </thead>

@@ -82,7 +82,7 @@ function AddSubCategory(props) {
                       </select>
                     </div>
 
-                    <div class="form-group">
+                    {/* <div class="form-group">
                       <p class="">Kích hoạt</p>
                       <label className="switch switch-default switch-pill switch-success mr-2">
                         <input
@@ -96,7 +96,7 @@ function AddSubCategory(props) {
                         <span className="switch-label" />
                         <span className="switch-handle" />
                       </label>
-                    </div>
+                    </div> */}
 
                     <button type="submit" className="btn btn-primary mr-2">
                       Thêm

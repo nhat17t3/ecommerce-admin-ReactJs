@@ -57,7 +57,7 @@ function ListCategoryArticle(props) {
                         <tr>
                           <th className="ml-5">ID</th>
                           <th>Tên</th>
-                          <th className="col-3">Kích hoạt</th>
+                          {/* <th className="col-3">Kích hoạt</th> */}
                           <th className="col-3">Actions</th>
                         </tr>
                       </thead>

@@ -19,7 +19,7 @@ function AddArticle(props) {
   const [shortDesc, setShortDesc] = useState("");
   const [description, setDescription] = useState("");
   const [categoryArticleId, setCategoryArticleId] = useState(0);
-  const [isHot, setIsHot] = useState(true);
+  // const [isHot, setIsHot] = useState(true);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -30,18 +30,32 @@ function AddArticle(props) {
     (state) => state.categoryArticle.listCategoryArticle
   );
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const changeHandlerFile = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = {
-      name,
-      shortDesc,
-      description,
-      categoryArticleId,
-      isHot,
-      isActive,
-    };
+    // const form = {
+    //   name,
+    //   shortDesc,
+    //   description,
+    //   categoryArticleId,
+    //   isHot,
+    //   isActive,
+    // };
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("shortDesc", shortDesc);
+    formData.append("description", description);
+    formData.append("categoryArticleId", categoryArticleId);
+    // formData.append("isHot", isHot);
+    formData.append("isActive", isActive);
+    formData.append("image", selectedFile);
 
-    await dispatch(createArticle(form));
+    await dispatch(createArticle(formData));
 
     history.goBack();
   };
@@ -54,7 +68,7 @@ function AddArticle(props) {
             <div className="col-md-12 grid-margin stretch-card ">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Thêm bài viết</h4>
+                  <h3 className="card-title text-center">Thêm bài viết</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -84,7 +98,7 @@ function AddArticle(props) {
                         required
                       >
                         <option value={""} hidden>
-                          khong có gì
+                          --chọn danh mục--
                         </option>
                         {listCate?.map((item) => (
                           <option value={item.id}>{item.name}</option>
@@ -133,7 +147,18 @@ function AddArticle(props) {
                       }}
                     />
 
-                    <div class="form-group">
+                    <div className="form-group col-12">
+                      <label style={{ display: "block" }}>Hình ảnh đại diện</label>
+                      <input
+                        type="file"
+                        name="imyy"
+                        className=""
+                        onChange={changeHandlerFile}
+                        required
+                      />
+                    </div>
+
+                    {/* <div class="form-group">
                       <p class="">bài viết HOT</p>
                     
                       <label className="switch switch-default switch-pill switch-danger mr-2">
@@ -148,7 +173,7 @@ function AddArticle(props) {
                         <span className="switch-label" />
                         <span className="switch-handle" />
                       </label>
-                    </div>
+                    </div> */}
 
                     <div class="form-group">
                       <p class="">kích hoạt</p>

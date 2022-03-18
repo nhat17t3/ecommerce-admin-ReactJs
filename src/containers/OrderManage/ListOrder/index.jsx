@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   deleteOrder,
+  filterOrderByStatus,
   getListOrderByPage,
   searchListOrderByName,
 } from "../../../actions";
@@ -25,6 +26,7 @@ function ListOrder(props) {
 
   const [searchFeild, setSearchFeild] = useState("");
   const [reRender, setReRender] = useState(true);
+  const [orderStatus, setOrderStatus] = useState("all");
 
   let query = useQuery();
 
@@ -34,9 +36,17 @@ function ListOrder(props) {
   const limit = 5;
 
   useEffect(() => {
-    if (searchFeild === "")
-      dispatch(getListOrderByPage(limit, currentPage - 1));
-    else dispatch(searchListOrderByName(searchFeild, limit, currentPage - 1));
+    if (searchFeild === ""){
+
+      if(orderStatus!="all"){
+        dispatch(filterOrderByStatus(Number(orderStatus),5,currentPage - 1))
+      }
+      else dispatch(getListOrderByPage(limit, currentPage - 1));
+    }      
+    else {
+      setOrderStatus("all");
+      dispatch(searchListOrderByName(searchFeild, limit, currentPage - 1));
+    }
   }, [currentPage]);
 
   const orders = useSelector((state) => state.order.listOrder);
@@ -95,10 +105,17 @@ function ListOrder(props) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log(searchFeild, "search");
-    dispatch(searchListOrderByName(searchFeild, limit, 0));
-    history.push(`?search=${searchFeild}&page=${1}`);
     setCurrentPage(1);
+    console.log(searchFeild, "search");
+    if(searchFeild.trim()!= ""){
+      // history.push(`?search=${searchFeild}&page=${1}`); 
+      dispatch(searchListOrderByName(searchFeild, limit, 0));
+
+    } 
+    else {
+      dispatch(getListOrderByPage(limit, 0));
+      history.push('/orders/list')
+    }
   };
   return (
     <>
@@ -117,7 +134,7 @@ function ListOrder(props) {
                       Thêm bài viết
                     </Link> */}
 
-                    <ul class="navbar-nav navbar-nav-right">
+                    <ul class="navbar-nav navbar-nav-right col-3">
                       <li class="nav-item nav-search d-none d-md-block mr-0">
                         <form class="input-group" onSubmit={handleSearch}>
                           <input
@@ -142,6 +159,30 @@ function ListOrder(props) {
                         </form>
                       </li>
                     </ul>
+                    <div className="col-6">
+
+                    </div>
+                    <div className="col-3">
+                    <select
+                        className="form-control"
+                        name="orderStatus"
+                        onChange={(e) =>{
+                          setOrderStatus(e.target.value);
+                          if(e.target.value == "all") dispatch(getListOrderByPage(limit, currentPage - 1));
+                          else dispatch(filterOrderByStatus(Number(e.target.value),5,currentPage - 1))
+                        } }
+                        value={orderStatus}
+                      >
+                        <option value={"all"}>--All--</option>
+                        <option value={"0"}>Chờ xác nhận</option>;
+                        <option value={"1"}>Chờ giao hàng</option>;
+                        <option value={"2"}>Đang giao hàng</option>;
+                        <option value={"3"}>Thành công</option>;
+                        <option value={"4"}>Đã hủy</option>;
+                        
+                      </select>
+                    </div>
+                    
                   </div>
                   <div className="table-responsive pt-3">
                     <table className="table table-striped project-orders-table table-bordered">

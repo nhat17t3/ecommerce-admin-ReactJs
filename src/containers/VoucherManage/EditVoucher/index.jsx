@@ -50,6 +50,10 @@ function EditVoucher(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const start = new Date(startAt);
+    const end = new Date(endAt);
+    if(start.getTime() <  end.getTime() ) {
+
     const form = {
       code,
       name,
@@ -67,6 +71,7 @@ function EditVoucher(props) {
     await dispatch(updateVoucher(+voucherId,form));
 
     history.goBack();
+  }else alert("ngày tháng không hợp lệ")
   };
 
   return (
@@ -77,7 +82,7 @@ function EditVoucher(props) {
             <div className="col-md-6 grid-margin stretch-card offset-md-3">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Thêm voucher</h4>
+                  <h3 className="card-title text-center">Cập nhật voucher</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -228,7 +233,7 @@ function EditVoucher(props) {
                     </div>
 
                     <button type="submit" className="btn btn-primary mr-2">
-                      Thêm
+                      Cập nhật
                     </button>
                     {/* <button className="btn btn-light">Hủy</button> */}
                   </form>

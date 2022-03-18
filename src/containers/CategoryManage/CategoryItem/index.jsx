@@ -49,7 +49,7 @@ function CategoryItem(props) {
         <td>{category.id}</td>
         <td >{category.name} </td>
         {/* <td >{cateParent?.name}</td> */}
-        <td>
+        {/* <td>
         <label className="switch switch-default switch-pill switch-success mr-2">
             <input
               type="checkbox"
@@ -65,7 +65,7 @@ function CategoryItem(props) {
             <span className="switch-label" />
             <span className="switch-handle" />
           </label>
-        </td>
+        </td> */}
 
         <td>
           <div className="d-flex align-items-center">

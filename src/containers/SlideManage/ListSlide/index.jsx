@@ -50,11 +50,11 @@ function ListSlide(props) {
                     Thêm Slide
                   </Link>
                   <div className="table-responsive pt-3">
-                    <table className="table table-striped project-orders-table">
+                    <table className="table table-striped project-orders-table table-bordered">
                       <thead className="thead-dark">
                         <tr>
                           <th className="ml-5 col-1">ID</th>
-                          <th className="col-1">Ảnh</th>
+                          <th className="col-2">Ảnh</th>
                           <th className="text-center">Tên</th>
                           {/* <th className="">Link liên kết</th> */}
                           <th className="col-2">Kích hoạt</th>

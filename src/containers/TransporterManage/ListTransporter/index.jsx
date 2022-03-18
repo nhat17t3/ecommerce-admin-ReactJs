@@ -43,12 +43,13 @@ function ListTransporter(props) {
       <Layout>
         <div className="content-wrapper">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-2"></div>
+            <div className="col-md-8">
               <div className="card">
                 <div className="card-body ">
-                  <h3 className="text-center">Quản lí đơn vị vận chuyển</h3>
+                  <h3 className="text-center">Quản lí phương thức giao hàng</h3>
                   <Link to={"/transporters/add"} className="btn btn-info">
-                    Thêm đơn vị vận chuyển
+                    Thêm phương thức GH
                   </Link>
                   <div className="table-responsive pt-3">
                     <table className="table table-striped project-orders-table">
@@ -56,8 +57,8 @@ function ListTransporter(props) {
                         <tr>
                           <th className="ml-5 col-1">ID</th>
                           <th>Tên</th>
-                          <th>Link tra cứu</th>
-                          <th className="col-1">Kích hoạt</th>
+                          <th>Phí</th>
+                          <th className="col-2">Kích hoạt</th>
                           <th className="col-1 text-center">Actions</th>
                         </tr>
                       </thead>

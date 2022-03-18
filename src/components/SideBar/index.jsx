@@ -14,7 +14,7 @@ const Sidebar = (props) => {
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
           <i className="fa fa-bars" />
         </button>
-        <a className="navbar-brand" href="./"><img src="/logov2.png" alt="Logo" width={50} /></a>
+        <Link to="/" className="navbar-brand" href="/"><img src="/logov2.png" alt="Logo" width={50} /></Link>
         <a className="navbar-brand hidden" href="./"><img src="/logov2.png" alt="Logo" /></a>
       </div>
       <div id="main-menu" className="main-menu collapse navbar-collapse">
@@ -41,9 +41,9 @@ const Sidebar = (props) => {
           <li>
             <Link to="/categories/list"> <i className="menu-icon ti-list" />Quản lí danh mục </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/categories/list-sub-cate"> <i className="menu-icon ti-list-ol" />Quản lí danh mục con </Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/products/list"> <i className="menu-icon ti-package" />Quản lí sản phẩm </Link>
           </li>
@@ -53,6 +53,9 @@ const Sidebar = (props) => {
           </li>
           <li>
             <Link to="/vouchers/list"> <i className="menu-icon ti-ticket" />Quản lí voucher</Link>
+          </li>
+          <li>
+            <Link to="/transporters/list"> <i className="menu-icon ti-list-ol" />Quản lí PT giao hàng</Link>
           </li>
           <li>
             <Link to="/payments/list"> <i className="menu-icon ti-credit-card" />Quản lí thanh toán</Link>
@@ -70,6 +73,9 @@ const Sidebar = (props) => {
               <li><i className="menu-icon fa fa-th" /><Link to= "/categoryArticles/list">Danh mục bài viết</Link></li>
               <li><i className="menu-icon fa fa-th" /><Link to= "/articles/list">Viết bài</Link></li>
             </ul>
+          </li>
+          <li>
+            <Link to="/change-pass"> <i className="menu-icon ti-lock" />Đổi mật khẩu</Link>
           </li>
           <li>
             <a href="/" onClick={() => dispatch(logout())}> <i className="menu-icon ti-angle-double-right" />Đăng xuất</a>

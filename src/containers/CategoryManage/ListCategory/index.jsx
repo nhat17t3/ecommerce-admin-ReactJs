@@ -45,22 +45,22 @@ function ListCategory(props) {
       <Layout>
         <div className="content-wrapper">
           <div className="row">
-            <div className="col-md-2"></div>
-            <div className="col-md-8">
+            <div className="col-md-3"></div>
+            <div className="col-md-6">
               <div className="card">
                 <div className="card-body ">
-                  <h1 className="card-title text-center">Quản lí danh mục Cấp 1</h1>
+                  <h1 className="card-title text-center">Quản lí danh mục sản phẩm</h1>
                   <Link to={"/categories/add"} className="btn btn-info">
-                    Thêm danh mục cấp 1
+                    Thêm danh mục 
                   </Link>
                   <div className="table-responsive pt-3">
                     <table className="table table-striped project-orders-table">
                     <thead className="thead-dark">
                         <tr>
                           <th className="ml-5">ID</th>
-                          <th>Tên</th>
+                          <th> Tên danh mục</th>
                           {/* <th>Danh mục cha</th> */}
-                          <th className="col-2">Kích hoạt</th>
+                          {/* <th className="col-2">Kích hoạt</th> */}
                           <th className="text-center col-1">Actions</th>
                         </tr>
                       </thead>

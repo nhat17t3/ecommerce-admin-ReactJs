@@ -28,7 +28,6 @@ function EditBrand(props) {
     state.brand.listBrand.find((x) => x.id === +brandId)
   );
 
-
   useEffect(() => {
     if (findItem) {
       setName(findItem.name);
@@ -40,30 +39,30 @@ function EditBrand(props) {
 
   const changeHandlerFile = (event) => {
     setSelectedFile(event.target.files[0]);
-  }; 
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
 
-		formData.append('name', name);
-		formData.append('slug', "slug");
-		formData.append('isActive', isActive);
-    if(selectedFile !== null) formData.append('image', selectedFile);
+    formData.append("name", name);
+    formData.append("slug", "slug");
+    formData.append("isActive", isActive);
+    if (selectedFile !== null) formData.append("image", selectedFile);
 
-    await dispatch(updateBrand(Number(brandId),formData));
+    await dispatch(updateBrand(Number(brandId), formData));
     history.push("/brands/list");
   };
 
   return (
     <>
-     <Layout>
+      <Layout>
         <div className="content-wrapper">
           <div className="row">
             <div className="col-md-6 grid-margin stretch-card offset-md-3">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Cập nhật thương hiệu</h4>
+                  <h3 className="card-title text-center">Cập nhật thương hiệu</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -79,27 +78,16 @@ function EditBrand(props) {
                         required
                       />
                     </div>
-                    {/* <div class="form-group">
-                      <label for="description">Đường dẫn</label>
-                      <input
-                        type="text"
-                        name="slug"
-                        className="form-control"
-                        id="slug"
-                        placeholder=""
-                        value={slug}
-                        onChange={(e) => setSlug(e.target.value)}
-                        required
-                      />
-                    </div> */}
-
-
 
                     <div>
-                      <img src={image} alt="logo brand" style={{width : 100, height : 100}}/>
+                      <img
+                        src={image}
+                        alt="logo brand"
+                        style={{ width: 100, height: 100 }}
+                      />
                     </div>
                     <div className="form-group">
-                    <label style={{display: "block"}}>Hình ảnh</label>
+                      <label style={{ display: "block" }}>Hình ảnh</label>
                       <input
                         type="file"
                         name="img[]a"
@@ -124,22 +112,6 @@ function EditBrand(props) {
                       </div> */}
                     </div>
 
-                    <div class="form-group">
-                      <p class="">Kích hoạt</p>
-                      <label className="switch switch-default switch-pill switch-success mr-2">
-                        <input
-                          type="checkbox"
-                          className="switch-input"
-                          name="isActive"
-                          value={isActive}
-                          onChange={() => setIsActive(!isActive)}
-                          checked={isActive}
-                        />
-                        <span className="switch-label" />
-                        <span className="switch-handle" />
-                      </label>
-                    </div>
-
                     <button type="submit" className="btn btn-primary mr-2">
                       Gửi
                     </button>
@@ -151,7 +123,7 @@ function EditBrand(props) {
           </div>
         </div>
       </Layout>
-  </>
+    </>
   );
 }
 

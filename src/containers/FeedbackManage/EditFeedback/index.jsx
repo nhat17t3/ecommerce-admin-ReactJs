@@ -64,7 +64,7 @@ function EditFeedback(props) {
           <div className="col-md-6 grid-margin stretch-card offset-md-3">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Thêm feedback</h4>
+                <h4 className="card-title">Xem feedback</h4>
                 {/* <p className="card-description">Basic form layout</p> */}
                 <form className="forms-sample" onSubmit={handleSubmit}>
                   <div className="form-group">
@@ -77,7 +77,7 @@ function EditFeedback(props) {
                       placeholder=""
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      required
+                      disabled
                     />
                   </div>
 
@@ -91,7 +91,7 @@ function EditFeedback(props) {
                       placeholder=""
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      required
+                      disabled
                     />
                   </div>
                   <div className="form-group">
@@ -104,7 +104,7 @@ function EditFeedback(props) {
                       placeholder=""
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      required
+                      disabled
                     />
                   </div>
                   
@@ -118,7 +118,7 @@ function EditFeedback(props) {
                       placeholder=""
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      required
+                      disabled
                     />
                   </div>
 
@@ -129,15 +129,16 @@ function EditFeedback(props) {
                       id="content"
                       rows="4"
                       name="content"
-                      // value={description}
+                      value={content}
                       onChange={(e) => setContent(e.target.value)}
                       required
+                      disabled
                     >
                       {content}
                     </textarea>
                   </div>
 
-                  <div class="form-group">
+                  {/* <div class="form-group">
                     <p class="">Đã đọc</p>
                     <label class="toggle-switch toggle-switch-success">
                       <input
@@ -149,11 +150,11 @@ function EditFeedback(props) {
                       />
                       <span class="toggle-slider round"></span>
                     </label>
-                  </div>
+                  </div> */}
 
-                  <button type="submit" className="btn btn-primary mr-2">
+                  {/* <button type="submit" className="btn btn-primary mr-2">
                     cập nhật
-                  </button>
+                  </button> */}
                   {/* <button className="btn btn-light">Hủy</button> */}
                 </form>
               </div>

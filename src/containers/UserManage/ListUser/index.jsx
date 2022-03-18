@@ -75,16 +75,16 @@ function ListUser(props) {
 
   const handleEditClick = (item) => {
     console.log("Edit: ", item);
-    const editUrl = `/users/edit/${item.id}`;
+    const editUrl = `/users/view/${item.id}`;
     // const editUrl = `/users/add`;
 
     history.push(editUrl);
   };
 
   const handleViewClick = (item) => {
-    console.log("View: ", item);
-    const viewUrl = `/users/${item.id}`;
-    history.push(viewUrl);
+    // console.log("View: ", item);
+    // const viewUrl = `/users/${item.id}`;
+    // history.push(viewUrl);
   };
 
   const handleDeleteClick = async (item) => {
@@ -135,7 +135,7 @@ function ListUser(props) {
                           />
                           <div className="input-group-append">
                             <button
-                              className="btn btn-sm btn-primary"
+                              className="btn  btn-primary"
                               type="submit"
                             >
                               Search

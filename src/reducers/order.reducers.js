@@ -46,7 +46,7 @@ export default (state = initState, action) => {
         loading: false,
         // message:action.payload.message,
         listOrder: action.payload.dataResponse,
-        count: action.payload.count
+        // count: action.payload.count
 
       };
       break;

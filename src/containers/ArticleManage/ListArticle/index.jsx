@@ -31,7 +31,7 @@ function ListArticle(props) {
   const [currentPage, setCurrentPage] = useState(
     Number(query.get("page")) || 1
   );
-  const limit = 3;
+  const limit = 5;
 
   useEffect(() => {
     if (searchFeild === "") dispatch(getListArticleByPage(limit, currentPage - 1));
@@ -39,7 +39,7 @@ function ListArticle(props) {
   }, [currentPage]);
 
   const articles = useSelector((state) => state.article.listArticle);
-  const count = useSelector((state) => state.product.count);
+  const count = useSelector((state) => state.article.count);
   var countPage = Math.ceil(count/limit);
 
   const handlePageChange = (event, pageNumber) => {
@@ -95,10 +95,17 @@ function ListArticle(props) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log(searchFeild, "search");
-    dispatch(searchListArticleByName(searchFeild, limit, 0));
-    history.push(`?search=${searchFeild}&page=${1}`);
     setCurrentPage(1);
+    console.log(searchFeild, "search");
+    if(searchFeild.trim()!= ""){
+      // history.push(`?search=${searchFeild}&page=${1}`); 
+      dispatch(searchListArticleByName(searchFeild, limit, 0));
+
+    } 
+    else {
+      dispatch(getListArticleByPage(limit, 0));
+      history.push('/articles/list')
+    }
   };
   return (
     <>
@@ -133,7 +140,7 @@ function ListArticle(props) {
                           />
                           <div className="input-group-append">
                             <button
-                              className="btn btn-sm btn-primary"
+                              className="btn  btn-primary"
                               type="submit"
                             >
                               Search
@@ -150,7 +157,7 @@ function ListArticle(props) {
                           <th className="ml-5 col-1" >ID</th>
                           <th>Tên bài viết</th>
                           <th className="col-2">Thể loại</th>
-                          <th className="col-1">Hot</th>
+                          {/* <th className="col-1">Hot</th> */}
                           <th className="col-1">Actions</th>
                         </tr>
                       </thead>

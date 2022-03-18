@@ -10,9 +10,9 @@ function BrandItem(props) {
 
   const [isActive, setIsActive] = useState(brand.isActive);
 
-  useEffect(() => {
-    setIsActive(brand.isActive);
-  }, [brand.isActive]);
+  // useEffect(() => {
+  //   setIsActive(brand.isActive);
+  // }, [brand.isActive]);
 
   const handleEditClick = () => {
     if (onEditClick) onEditClick(brand);
@@ -26,15 +26,15 @@ function BrandItem(props) {
     if (onViewClick) onViewClick(brand);
   };
 
-  const handleActiveClick = async () => {
-    const formData = new FormData();
-    formData.append("name", brand.name);
-    formData.append("slug", brand.slug);
-    formData.append("isActive", !isActive);
+  // const handleActiveClick = async () => {
+  //   const formData = new FormData();
+  //   formData.append("name", brand.name);
+  //   formData.append("slug", brand.slug);
+  //   formData.append("isActive", !isActive);
 
-    await dispatch(updateBrand(Number(brand.id), formData));
-    history.push("/brands/list");
-  };
+  //   await dispatch(updateBrand(Number(brand.id), formData));
+  //   history.push("/brands/list");
+  // };
 
   return (
     <>
@@ -44,20 +44,7 @@ function BrandItem(props) {
           <img src={brand.image} width="50" height="40" alt="brand" />
         </td>
         <td>{brand.name}</td>
-        <td>
-          {/* <label class="toggle-switch toggle-switch-success" >
-            <input
-              type="checkbox"
-              name="isActive"
-              value={isActive}
-              onChange={() => {
-                setIsActive(!isActive);
-                handleActiveClick();
-              }}
-              checked={isActive}
-            />
-            <span class="toggle-slider round"></span>
-          </label> */}
+        {/* <td>
           <label className="switch switch-default switch-pill switch-success mr-2">
             <input
               type="checkbox"
@@ -73,7 +60,7 @@ function BrandItem(props) {
             <span className="switch-label" />
             <span className="switch-handle" />
           </label>
-        </td>
+        </td> */}
 
         <td>
           <div className="d-flex align-items-center">

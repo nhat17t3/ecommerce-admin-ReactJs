@@ -77,7 +77,7 @@ function EditPayment(props) {
                       required
                     />
                   </div>
-                  {/* <div class="form-group">
+                  <div class="form-group">
                     <label for="description">Mô tả</label>
                     <textarea
                       class="form-control"
@@ -90,9 +90,9 @@ function EditPayment(props) {
                     >
                       {description}
                     </textarea>
-                  </div> */}
+                  </div>
 
-<div for="specification">Mô tả</div>
+{/* <div for="specification">Mô tả</div>
                     <SunEditor
                       onChange={(content) => setDescription(content)}
                       setContents={description}
@@ -101,7 +101,7 @@ function EditPayment(props) {
                         height: 300,
                         buttonList: buttonList.complex,
                       }}
-                    />
+                    /> */}
 
                   <div class="form-group">
                     <p class="">Kích hoạt</p>

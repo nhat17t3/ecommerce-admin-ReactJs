@@ -91,14 +91,14 @@ function EditSubCategory(props) {
                         onChange={(e) => setParentId(e.target.value)}
                         value={parentId}
                       >
-                        <option value={0}>khong có gì</option>
+                        <option value={0} hidden>khong có gì</option>
                         {listParentCategory?.map((item) => (
                           <option value={item.id}>{item.name}</option>
                         ))}
                       </select>
                     </div>
 
-                  <div class="form-group">
+                  {/* <div class="form-group">
                     <p class="">Kích hoạt</p>
                     <label className="switch switch-default switch-pill switch-success mr-2">
                         <input
@@ -112,7 +112,7 @@ function EditSubCategory(props) {
                         <span className="switch-label" />
                         <span className="switch-handle" />
                       </label>
-                  </div>
+                  </div> */}
 
                   <button type="submit" className="btn btn-primary mr-2">
                     Cập nhật

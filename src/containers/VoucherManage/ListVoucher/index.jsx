@@ -30,7 +30,7 @@ function ListVoucher(props) {
   const [currentPage, setCurrentPage] = useState(
     Number(query.get("page")) || 1
   );
-  const limit = 3;
+  const limit = 5;
 
   useEffect(() => {
     if (searchFeild === "")
@@ -72,11 +72,20 @@ function ListVoucher(props) {
   };
 
   const handleSearch = (e) => {
+   
+
     e.preventDefault();
-    console.log(searchFeild, "search");
-    dispatch(searchListVoucherByName(searchFeild, limit, 0));
-    history.push(`?search=${searchFeild}&page=${1}`);
     setCurrentPage(1);
+    console.log(searchFeild, "search");
+    if(searchFeild.trim()!= ""){
+      // history.push(`?search=${searchFeild}&page=${1}`); 
+      dispatch(searchListVoucherByName(searchFeild, limit, 0));
+
+    } 
+    else {
+      dispatch(getListVoucherByPage(limit, 0));
+      history.push('/vouchers/list')
+    }
   };
 
   return (

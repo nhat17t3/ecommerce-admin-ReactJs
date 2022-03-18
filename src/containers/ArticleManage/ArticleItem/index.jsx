@@ -9,11 +9,11 @@ function ArticleItem(props) {
   const history = useHistory()
   const { article, onEditClick, onDeleteClick, onViewClick } = props;
   
-  const [isHot, setIsHot] = useState(article.isHot);
+  // const [isHot, setIsHot] = useState(article.isHot);
 
-  useEffect(() => {
-    setIsHot(article.isHot)
-  }, [article.isHot])
+  // useEffect(() => {
+  //   setIsHot(article.isHot)
+  // }, [article.isHot])
   
 
   const handleEditClick = () => {
@@ -28,20 +28,20 @@ function ArticleItem(props) {
     if (onViewClick) onViewClick(article);
   };
 
-  const handleHotClick = () => {
-    const form = {
-      name : article.name,
-      shortDesc : article.shortDesc,
-      description : article.description,
-      categoryArticleId : article.categoryArticle?.id,
-      isActive : article.isActive,
-      isHot : !isHot
-      };
-    console.log(form,"edit");
-    // alert(JSON.stringify(k));
+  // const handleHotClick = () => {
+  //   const form = {
+  //     name : article.name,
+  //     shortDesc : article.shortDesc,
+  //     description : article.description,
+  //     categoryArticleId : article.categoryArticle?.id,
+  //     isActive : article.isActive,
+  //     isHot : !isHot
+  //     };
+  //   console.log(form,"edit");
+  //   // alert(JSON.stringify(k));
 
-    dispatch(updateArticle(+article.id,form));
-  };
+  //   dispatch(updateArticle(+article.id,form));
+  // };
 
   return (
     <>
@@ -49,7 +49,7 @@ function ArticleItem(props) {
         <td>{article.id}</td>
         <td>{article.name} </td>
         <td >{article.categoryArticle?.name}</td>
-        <td>
+        {/* <td>
           <label class="toggle-switch toggle-switch-success" >
             <input
               type="checkbox"
@@ -63,7 +63,7 @@ function ArticleItem(props) {
             />
             <span class="toggle-slider round"></span>
           </label>
-        </td>
+        </td> */}
 
         <td>
           <div className="d-flex align-items-center">
@@ -72,7 +72,7 @@ function ArticleItem(props) {
               className="btn btn-success btn-sm btn-icon-text mr-3"
               onClick={handleEditClick}
             >
-              View
+              Edit
               <i className="typcn typcn-edit btn-icon-append" />
             </button>
             <button
