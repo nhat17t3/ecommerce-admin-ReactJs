@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const getListProductByPage = (limit=10,page=0) => {
   return async (dispatch) => {
     dispatch({ type: productConstants.GET_PRODUCT_BY_PAGE_REQUEST });
-    const res = await axios.get(`/api/products?limit=${limit}&page=${page}&sortBy=PriceASC`);
+    const res = await axios.get(`/api/products?limit=${limit}&page=${page}&sortBy=`);
 
     if (res.status === 200) {
       const { dataResponse, message } = res.data;

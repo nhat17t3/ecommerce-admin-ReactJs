@@ -68,7 +68,7 @@ function ViewUser(props) {
                             <td>{order.nameReceiver}</td>
                             <td>{order.phoneReceiver} </td>
                             <td >{order.total}</td>
-                            <td >{order.status == null ? <span class="badge bg-warning">Chờ xác nhận</span> :
+                            <td >{order.status == 0 ? <span class="badge bg-warning">Chờ xác nhận</span> :
                             order.status == 1 ? <span class="badge bg-primary">Đã xác nhận</span> :
                             order.status == 2 ? <span class="badge bg-info">Đang giao hàng</span> :
                             order.status == 3 ? <span class="badge bg-success">Thành công</span> :

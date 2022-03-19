@@ -72,7 +72,7 @@ function TransporterItem(props) {
               className="btn btn-success btn-sm btn-icon-text mr-3"
               onClick={handleEditClick}
             >
-              view
+              Edit
               <i className="typcn typcn-edit btn-icon-append" />
             </button>
             <button

@@ -71,12 +71,13 @@ export const searchListOrderByName = (key,status,limit,page) => {
     const res = await axios.get(`/api/orders/filter1?key=${key}&status=${status}&limit=${limit}&page=${page}`);
 
     if (res.status === 200) {
-      const { dataResponse, message } = res.data;
+      const { dataResponse, message,count } = res.data;
       dispatch({
         type: orderConstants.SEARCH_ORDER_BY_NAME_SUCCESS,
         payload: {
           dataResponse: dataResponse,
           message: message,
+          count:count
         },
       });
 

@@ -81,7 +81,7 @@ function EditSlide(props) {
                     />
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label htmlFor="name">Thứ tự slide</label>
                     <input
                       type="number"
@@ -93,7 +93,7 @@ function EditSlide(props) {
                       onChange={(e) => setSort(e.target.value)}
                       required
                     />
-                  </div>
+                  </div> */}
 
                   <div className="form-group">
                     <label htmlFor="name">Link liên kết</label>
