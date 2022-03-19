@@ -19,7 +19,7 @@ export const getListTransportByPage = (limit=10,page=0) => {
         },
       });
 
-      toast("get list transport by page success");
+      // toast("get list transport by page success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -29,7 +29,7 @@ export const getListTransportByPage = (limit=10,page=0) => {
           message: message,
         },
       });
-      toast("get list transport by page error");
+      // toast("get list transport by page error");
     }
   };
 };
@@ -49,7 +49,7 @@ export const getTransportById = (id) => {
         },
       });
 
-      toast("get transport by id success");
+      // toast("get transport by id success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -59,7 +59,7 @@ export const getTransportById = (id) => {
           message: message,
         },
       });
-      toast("get transport by id error");
+      // toast("get transport by id error");
     }
   };
 };
@@ -81,7 +81,7 @@ export const searchListTransportByCode = (key,limit,page) => {
         },
       });
 
-      toast("search list transport by code success");
+      // toast("search list transport by code success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -91,7 +91,7 @@ export const searchListTransportByCode = (key,limit,page) => {
           message: message,
         },
       });
-      toast("search list transport by code error");
+      // toast("search list transport by code error");
     }
   };
 };

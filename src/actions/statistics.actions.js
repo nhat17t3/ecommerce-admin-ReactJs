@@ -17,7 +17,7 @@ export const countElement = () => {
         },
       });
 
-      toast("thống kê success");
+      // toast("thống kê success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -27,7 +27,7 @@ export const countElement = () => {
           message: message,
         },
       });
-      toast("thống kê error");
+      // toast("thống kê error");
     }
   };
 };

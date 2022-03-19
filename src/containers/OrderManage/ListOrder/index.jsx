@@ -10,6 +10,7 @@ import {
   searchListOrderByName,
 } from "../../../actions";
 import Layout from "../../../components/Layout";
+import orderReducers from "../../../reducers/order.reducers";
 import OrderItem from "../OrderItem";
 
 ListOrder.propTypes = {};
@@ -26,7 +27,8 @@ function ListOrder(props) {
 
   const [searchFeild, setSearchFeild] = useState("");
   const [reRender, setReRender] = useState(true);
-  const [orderStatus, setOrderStatus] = useState("all");
+  const [addSearch, setAddSearch] = useState(true);
+  const [orderStatus, setOrderStatus] = useState("5");
 
   let query = useQuery();
 
@@ -36,18 +38,21 @@ function ListOrder(props) {
   const limit = 5;
 
   useEffect(() => {
-    if (searchFeild === ""){
+    // if (searchFeild === ""){
 
-      if(orderStatus!="all"){
-        dispatch(filterOrderByStatus(Number(orderStatus),5,currentPage - 1))
-      }
-      else dispatch(getListOrderByPage(limit, currentPage - 1));
-    }      
-    else {
-      setOrderStatus("all");
-      dispatch(searchListOrderByName(searchFeild, limit, currentPage - 1));
-    }
-  }, [currentPage]);
+    //   if(orderStatus!="all"){
+    //     dispatch(filterOrderByStatus(Number(orderStatus),5,currentPage - 1))
+    //   }
+    //   else dispatch(getListOrderByPage(limit, currentPage - 1));
+    // }      
+    // else {
+    //   setOrderStatus("all");
+    //   dispatch(searchListOrderByName(searchFeild, limit, currentPage - 1));
+    // }
+
+    dispatch(searchListOrderByName(searchFeild,orderStatus, limit, currentPage - 1));
+    
+  }, [currentPage, orderStatus, addSearch]);
 
   const orders = useSelector((state) => state.order.listOrder);
   const count = useSelector((state) => state.order.count);
@@ -106,16 +111,18 @@ function ListOrder(props) {
   const handleSearch = (e) => {
     e.preventDefault();
     setCurrentPage(1);
-    console.log(searchFeild, "search");
-    if(searchFeild.trim()!= ""){
-      // history.push(`?search=${searchFeild}&page=${1}`); 
-      dispatch(searchListOrderByName(searchFeild, limit, 0));
+    // console.log(searchFeild, "search");
+    // if(searchFeild.trim()!= ""){
+    //   // history.push(`?search=${searchFeild}&page=${1}`); 
+    //   dispatch(searchListOrderByName(searchFeild, limit, 0));
 
-    } 
-    else {
-      dispatch(getListOrderByPage(limit, 0));
-      history.push('/orders/list')
-    }
+    // } 
+    // else {
+    //   dispatch(getListOrderByPage(limit, 0));
+    //   history.push('/orders/list')
+    // }
+
+    setAddSearch(!addSearch);
   };
   return (
     <>
@@ -168,12 +175,12 @@ function ListOrder(props) {
                         name="orderStatus"
                         onChange={(e) =>{
                           setOrderStatus(e.target.value);
-                          if(e.target.value == "all") dispatch(getListOrderByPage(limit, currentPage - 1));
-                          else dispatch(filterOrderByStatus(Number(e.target.value),5,currentPage - 1))
+                          // if(e.target.value == "5") dispatch(getListOrderByPage(limit, currentPage - 1));
+                          // else dispatch(filterOrderByStatus(Number(e.target.value),5,currentPage - 1))
                         } }
                         value={orderStatus}
                       >
-                        <option value={"all"}>--All--</option>
+                        <option value={"5"}>--All--</option>
                         <option value={"0"}>Chờ xác nhận</option>;
                         <option value={"1"}>Chờ giao hàng</option>;
                         <option value={"2"}>Đang giao hàng</option>;

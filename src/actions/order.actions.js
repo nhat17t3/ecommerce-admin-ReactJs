@@ -19,7 +19,7 @@ export const getListOrderByPage = (limit=10,page=0) => {
         },
       });
 
-      toast("get list order by page success");
+      // toast("get list order by page success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -29,7 +29,7 @@ export const getListOrderByPage = (limit=10,page=0) => {
           message: message,
         },
       });
-      toast("get list order by page error");
+      // toast("get list order by page error");
     }
   };
 };
@@ -49,7 +49,7 @@ export const getOrderById = (id) => {
         },
       });
 
-      toast("get order by id success");
+      // toast("get order by id success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -59,15 +59,16 @@ export const getOrderById = (id) => {
           message: message,
         },
       });
-      toast("get order by id error");
+      // toast("get order by id error");
     }
   };
 };
 
-export const searchListOrderByName = (key,limit,page) => {
+export const searchListOrderByName = (key,status,limit,page) => {
   return async (dispatch) => {
     dispatch({ type: orderConstants.SEARCH_ORDER_BY_NAME_REQUEST });
-    const res = await axios.get(`/api/orders/search?key=${key}&limit=${limit}&page=${page}`);
+    // const res = await axios.get(`/api/orders/search?key=${key}&limit=${limit}&page=${page}`);
+    const res = await axios.get(`/api/orders/filter1?key=${key}&status=${status}&limit=${limit}&page=${page}`);
 
     if (res.status === 200) {
       const { dataResponse, message } = res.data;
@@ -79,7 +80,7 @@ export const searchListOrderByName = (key,limit,page) => {
         },
       });
 
-      toast("search list order by name success");
+      // toast("search list order by name success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -91,7 +92,7 @@ export const searchListOrderByName = (key,limit,page) => {
 
         },
       });
-      toast("search list order by name error");
+      // toast("search list order by name error");
     }
   };
 };
@@ -112,7 +113,7 @@ export const filterOrderByUser = (userId,limit,page) => {
         },
       });
 
-      toast("filter order by user success");
+      // toast("filter order by user success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -122,7 +123,7 @@ export const filterOrderByUser = (userId,limit,page) => {
           message: message,
         },
       });
-      toast("filter order by user error");
+      // toast("filter order by user error");
     }
   };
 };
@@ -142,7 +143,7 @@ export const filterOrderByStatus = (status,limit,page) => {
         },
       });
 
-      toast("filter order by status success");
+      // toast("filter order by status success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -152,7 +153,7 @@ export const filterOrderByStatus = (status,limit,page) => {
           message: message,
         },
       });
-      toast("filter order by status error");
+      // toast("filter order by status error");
     }
   };
 };

@@ -17,7 +17,7 @@ export const getListBrand = () => {
         },
       });
 
-      toast("get list brand success");
+      // toast("get list brand success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -27,7 +27,7 @@ export const getListBrand = () => {
           message: message,
         },
       });
-      toast("get list brand error");
+      // toast("get list brand error");
     }
   };
 };

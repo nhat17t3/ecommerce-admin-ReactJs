@@ -17,7 +17,7 @@ export const getListFavouriteByPage = (limit=10,page=0) => {
         },
       });
 
-      toast("get list favourite by page success");
+      // toast("get list favourite by page success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -27,7 +27,7 @@ export const getListFavouriteByPage = (limit=10,page=0) => {
           message: message,
         },
       });
-      toast("get list favourite by page error");
+      // toast("get list favourite by page error");
     }
   };
 };
@@ -47,7 +47,7 @@ export const getFavouriteById = (id) => {
         },
       });
 
-      toast("get favourite by id success");
+      // toast("get favourite by id success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -57,7 +57,7 @@ export const getFavouriteById = (id) => {
           message: message,
         },
       });
-      toast("get favourite by id error");
+      // toast("get favourite by id error");
     }
   };
 };
@@ -77,7 +77,7 @@ export const filterFavouriteByUser = (userId,limit,page) => {
         },
       });
 
-      toast("filter favourite by user success");
+      // toast("filter favourite by user success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -87,7 +87,7 @@ export const filterFavouriteByUser = (userId,limit,page) => {
           message: message,
         },
       });
-      toast("filter favourite by user error");
+      // toast("filter favourite by user error");
     }
   };
 };

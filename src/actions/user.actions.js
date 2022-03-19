@@ -18,7 +18,7 @@ export const getListUserByPage = (limit=10,page=0) => {
         },
       });
 
-      toast("get list user by page success");
+      // toast("get list user by page success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -29,7 +29,7 @@ export const getListUserByPage = (limit=10,page=0) => {
           
         },
       });
-      toast("get list user by page error");
+      // toast("get list user by page error");
     }
   };
 };
@@ -49,7 +49,7 @@ export const getUserById = (id) => {
         },
       });
 
-      toast("get user by id success");
+      // toast("get user by id success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -59,7 +59,7 @@ export const getUserById = (id) => {
           message: message,
         },
       });
-      toast("get user by id error");
+      // toast("get user by id error");
     }
   };
 };
@@ -80,7 +80,7 @@ export const searchListUserByName = (key,limit,page) => {
         },
       });
 
-      toast("search list user by name success");
+      // toast("search list user by name success");
     } else {
       const { dataResponse, message } = res.data;
       dispatch({
@@ -90,7 +90,7 @@ export const searchListUserByName = (key,limit,page) => {
           message: message,
         },
       });
-      toast("search list user by name error");
+      // toast("search list user by name error");
     }
   };
 };
