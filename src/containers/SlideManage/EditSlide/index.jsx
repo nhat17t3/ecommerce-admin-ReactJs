@@ -119,7 +119,7 @@ function EditSlide(props) {
                         name="img[]a"
                         className=""
                         onChange={changeHandlerFile}
-                        required
+                        
                       />
                     </div>
 

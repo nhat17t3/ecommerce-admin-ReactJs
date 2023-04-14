@@ -164,7 +164,7 @@ null}
       <p className="m-0">Họ tên: {findItem.nameReceiver} <br /> 
        Số điện thoại: {findItem.phoneReceiver} <br />
        Email: {findItem.emailReceiver}  <br />
-       Địa chỉ:  {findItem.phoneReceiver} </p>
+       Địa chỉ:  {findItem.addressReceiver} </p>
     </div> {/* col.// */}
     <div className="col-lg-4 border-start">
       <p className="mb-0 text-muted">Hình thức thanh toán</p>

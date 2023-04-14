@@ -59,7 +59,7 @@ function EditTransporter(props) {
             <div className="col-md-6 grid-margin stretch-card offset-md-3">
               <div className="card">
                 <div className="card-body">
-                  <h4 className="card-title">Cập nhật phương thức giao hàng</h4>
+                  <h3 className="card-title text-center">Cập nhật phương thức giao hàng</h3>
                   {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
