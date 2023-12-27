@@ -2,30 +2,32 @@ import axios from "../helpers/axios";
 import { productConstants } from "../constants/product.constants";
 import { toast } from "react-toastify";
 
-export const getListProductByPage = (limit=10,page=0) => {
+export const getListProductByPage = (formData) => {
   return async (dispatch) => {
     dispatch({ type: productConstants.GET_PRODUCT_BY_PAGE_REQUEST });
-    const res = await axios.get(`/api/products?limit=${limit}&page=${page}&sortBy=`);
+    console.log("formData", formData)
+    const res = await axios.post(`/api/products/list`,formData);
 
     if (res.status === 200) {
-      const { dataResponse, message } = res.data;
+      const { result, message } = res.data;
       dispatch({
         type: productConstants.GET_PRODUCT_BY_PAGE_SUCCESS,
         payload: {
-          dataResponse: dataResponse,
+          dataResponse: result.content,
           message: message,
-          count: res.data.count,
-
+          pageNumber: result.pageNumber,
+          pageSize :result.pageSize,
+          totalElements: result.totalElements,
+          totalPages: result.totalPages,
         },
       });
 
       // toast("get list product by page success");
     } else {
-      const { dataResponse, message } = res.data;
+      const { message } = res.data;
       dispatch({
         type: productConstants.GET_PRODUCT_BY_PAGE_FAILURE,
         payload: {
-          dataResponse: dataResponse,
           message: message,
         },
       });
@@ -40,124 +42,25 @@ export const getProductById = (id) => {
     const res = await axios.get(`/api/products/${id}`);
 
     if (res.status === 200) {
-      const { dataResponse, message } = res.data;
+      const { result, message } = res.data;
       dispatch({
         type: productConstants.GET_PRODUCT_BY_ID_SUCCESS,
         payload: {
-          dataResponse: dataResponse,
+          dataResponse: result,
           message: message,
         },
       });
 
       // toast("get product by id success");
     } else {
-      const { dataResponse, message } = res.data;
+      const { message } = res.data;
       dispatch({
         type: productConstants.GET_PRODUCT_BY_ID_FAILURE,
         payload: {
-          dataResponse: dataResponse,
           message: message,
         },
       });
       // toast("get product by id error");
-    }
-  };
-};
-
-export const searchListProductByName = (key,limit,page) => {
-  return async (dispatch) => {
-    dispatch({ type: productConstants.SEARCH_PRODUCT_BY_NAME_REQUEST });
-    const res = await axios.get(`/api/products/search?key=${key}&limit=${limit}&page=${page}`);
-
-    if (res.status === 200) {
-      const { dataResponse, message } = res.data;
-      dispatch({
-        type: productConstants.SEARCH_PRODUCT_BY_NAME_SUCCESS,
-        payload: {
-          dataResponse: dataResponse,
-          message: message,
-          count: res.data.count,
-
-        },
-      });
-
-      // toast("search list product by name success");
-    } else {
-      const { dataResponse, message } = res.data;
-      dispatch({
-        type: productConstants.SEARCH_PRODUCT_BY_NAME_FAILURE,
-        payload: {
-          dataResponse: dataResponse,
-          message: message,
-        },
-      });
-      // toast("search list product by name error");
-    }
-  };
-};
-
-
-export const filterProductByBrand = (brandId,limit,page) => {
-  return async (dispatch) => {
-    dispatch({ type: productConstants.FILTER_PRODUCT_BY_BRAND_REQUEST });
-    const res = await axios.get(`/api/products/brand/${brandId}?limit=${limit}&page=${page}`);
-
-    if (res.status === 200) {
-      const { dataResponse, message } = res.data;
-      dispatch({
-        type: productConstants.FILTER_PRODUCT_BY_BRAND_SUCCESS,
-        payload: {
-          dataResponse: dataResponse,
-          message: message,
-          count: res.data.count,
-
-        },
-      });
-
-      // toast("filter product by brand success");
-    } else {
-      const { dataResponse, message } = res.data;
-      dispatch({
-        type: productConstants.FILTER_PRODUCT_BY_BRAND_FAILURE,
-        payload: {
-          dataResponse: dataResponse,
-          message: message,
-        },
-      });
-      // toast("filter product by brand error");
-    }
-  };
-};
-
-
-export const filterProductByCategory = (cateId,limit,page) => {
-  return async (dispatch) => {
-    dispatch({ type: productConstants.FILTER_PRODUCT_BY_CATEGORY_REQUEST });
-    const res = await axios.get(`/api/products/category/${cateId}?limit=${limit}&page=${page}`);
-
-    if (res.status === 200) {
-      const { dataResponse, message } = res.data;
-      dispatch({
-        type: productConstants.FILTER_PRODUCT_BY_CATEGORY_SUCCESS,
-        payload: {
-          dataResponse: dataResponse,
-          message: message,
-          count: res.data.count,
-
-        },
-      });
-
-      // toast("filter product by category success");
-    } else {
-      const { dataResponse, message } = res.data;
-      dispatch({
-        type: productConstants.FILTER_PRODUCT_BY_CATEGORY_FAILURE,
-        payload: {
-          dataResponse: dataResponse,
-          message: message,
-        },
-      });
-      // toast("filter product by category error");
     }
   };
 };
@@ -171,23 +74,22 @@ export const createProduct = (form) => {
     const res = await axios.post(`/api/products`, form);
 
     if (res.status === 201) {
-      const { dataResponse, message } = res.data;
+      const { result, message } = res.data;
 
       dispatch({
         type: productConstants.ADD_PRODUCT_SUCCESS,
         payload: {
-          dataResponse: dataResponse,
+          dataResponse: result,
           message: message,
         },
       });
       toast.success("tạo sản phẩm thành công");
       // dispatch(getListProduct());
     } else {
-      const { dataResponse, message } = res.data;
+      const {  message } = res.data;
       dispatch({
         type: productConstants.ADD_PRODUCT_FAILURE,
         payload: {
-          dataResponse: dataResponse,
           message: message,
         },
       });
@@ -201,12 +103,11 @@ export const deleteProduct = (form) => {
     dispatch({ type: productConstants.DELETE_PRODUCT_REQUEST });
     const res = await axios.delete(`/api/products/${form.id}`);
     if (res.status === 200) {
-      const { dataResponse, message } = res.data;
+      const { message } = res.data;
 
       dispatch({
         type: productConstants.DELETE_PRODUCT_SUCCESS,
         payload: {
-          dataResponse: dataResponse,
           message: message,
         },
       });
@@ -214,12 +115,11 @@ export const deleteProduct = (form) => {
 
       // dispatch(getListProductByPage());
     } else {
-      const { dataResponse, message } = res.data;
+      const {  message } = res.data;
 
       dispatch({
         type: productConstants.DELETE_PRODUCT_FAILURE,
         payload: {
-          dataResponse: dataResponse,
           message: message,
         },
       });
@@ -235,12 +135,12 @@ export const updateProduct = (id,form) => {
     const res = await axios.put(`/api/products/${id}`, form);
 
     if (res.status === 200) {
-      const { dataResponse, message } = res.data;
+      const { result, message } = res.data;
 
       dispatch({
         type: productConstants.UPDATE_PRODUCT_SUCCESS,
         payload: {
-          dataResponse: dataResponse,
+          dataResponse: result,
           message: message,
         },
       });
@@ -248,12 +148,11 @@ export const updateProduct = (id,form) => {
 
       // dispatch(getListProduct());
     } else {
-      const { dataResponse, message } = res.data;
+      const {  message } = res.data;
 
       dispatch({
         type: productConstants.UPDATE_PRODUCT_FAILURE,
         payload: {
-          dataResponse: dataResponse,
           message: message,
         },
       });

@@ -4,27 +4,34 @@ import { Link, NavLink } from "react-router-dom";
 const Header = (props) => {
   return (
     <>
-<header id="header" className="header" style={{padding: "22px 0" , }}>
-      <div className="header-menu">
-        <div className="col-sm-7">
-          {/* <a id="menuToggle" className="menutoggle pull-left"><i className="fa fa fa-tasks" /></a> */}
-        </div>
-        <div className="col-sm-5">
-          <div className="user-area dropdown float-right">
-            {/* <button href="#" className="dropdown-toggle btn-dark" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> */}
-              {/* <img className="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar" /> */}
-              {/* Cá nhân */}.
-            {/* </button> */}
-            <div className="user-menu dropdown-menu">
-              <a className="nav-link" href="#"><i className="fa fa- user" />My Profile</a>
-              <a className="nav-link" href="#"><i className="fa fa- user" />Notifications <span className="count">13</span></a>
-              <a className="nav-link" href="#"><i className="fa fa -cog" />Settings</a>
-              <a className="nav-link" href="#"><i className="fa fa-power -off" />Logout</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>{/* /header */}
+      <header className="main-header">
+        {/* Logo */}
+        <a href="#" className="logo">
+          {/* mini logo for sidebar mini 50x50 pixels */}
+          <span className="logo-mini">
+            <b>HLN</b>
+          </span>
+          {/* logo for regular state and mobile devices */}
+          <span className="logo-lg">
+            <b>HLN Shop Admin</b>
+          </span>
+        </a>
+        {/* Header Navbar: style can be found in header.less */}
+        <nav className="navbar navbar-static-top" role="navigation">
+          {/* Sidebar toggle button*/}
+          <a
+            href="#"
+            className="sidebar-toggle"
+            data-toggle="offcanvas"
+            role="button"
+          >
+            <span className="sr-only"></span>
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+          </a>
+        </nav>
+      </header>
     </>
   );
 };

@@ -5,8 +5,8 @@ import { authConstants } from "../constants/auth.constants";
 const token = window.localStorage.getItem("token");
 
 const axiosIntance = axios.create({
-  // baseURL: "http://localhost:8080",
-  baseURL: "https://doantotngiepbackendspringboot-production.up.railway.app",
+  baseURL: "http://localhost:8080",
+  // baseURL: "https://doantotngiepbackendspringboot-production.up.railway.app",
   headers: {
     "content-type": "application/json",
     Authorization: token ? `Bearer ${token}` : "",

@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Layout from "../../components/Layout";
 import { changePassword } from "../../actions";
-
-
+import Layout from "../../components/Layout";
 
 function ChangePass(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-
-   // const [username, setUsername] = useState("");
-   const [oldPass , setOldPass] = useState("");
-   const [newPass , setNewPass] = useState("");
-   const [newPass2,setNewPass2] = useState("");
-
- 
+  const [oldPass, setOldPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [newPass2, setNewPass2] = useState("");
 
   const changePass = (e) => {
     e.preventDefault();
@@ -25,13 +19,12 @@ function ChangePass(props) {
     };
 
     console.log(send);
-    if(newPass != newPass2) alert("mật khẩu mới không khớp");
+    if (newPass != newPass2) alert("mật khẩu mới không khớp");
+    else dispatch(changePassword(send));
 
-   else  dispatch(changePassword(send));
-
-   setNewPass("");
-   setNewPass2("");
-   setOldPass("");
+    setNewPass("");
+    setNewPass2("");
+    setOldPass("");
   };
 
   return (
@@ -43,7 +36,6 @@ function ChangePass(props) {
               <div className="card">
                 <div className="card-body">
                   <h3 className="card-title text-center">Đổi mật khẩu</h3>
-                  {/* <p className="card-description">Basic form layout</p> */}
                   <form className="forms-sample" onSubmit={changePass}>
                     <div className="form-group">
                       <label htmlFor="name">Mật khẩu cũ</label>
@@ -80,17 +72,12 @@ function ChangePass(props) {
                         value={newPass2}
                         onChange={(e) => setNewPass2(e.target.value)}
                         required
-                        
                       />
                     </div>
-                    
-
-                   
 
                     <button type="submit" className="btn btn-primary mr-2">
                       Thêm
                     </button>
-                    {/* <button className="btn btn-light">Hủy</button> */}
                   </form>
                 </div>
               </div>

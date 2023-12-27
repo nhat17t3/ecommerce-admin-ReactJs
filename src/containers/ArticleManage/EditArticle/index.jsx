@@ -1,47 +1,41 @@
 import React, { useEffect, useState } from "react";
-// import MultiSelect from "react-multi-select-component";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import SunEditor, { buttonList } from "suneditor-react";
+import "suneditor/dist/css/suneditor.min.css";
 import { getListCategoryArticle } from "../../../actions";
 import {
+  createArticle,
   getArticleById,
   updateArticle,
 } from "../../../actions/article.actions";
 import Layout from "../../../components/Layout";
-import SunEditor, { buttonList } from "suneditor-react";
-import "suneditor/dist/css/suneditor.min.css";
 
-EditArticle.propTypes = {};
+AddArticle.propTypes = {};
 
-EditArticle.defaultProps = {};
-
-function EditArticle(props) {
+function AddArticle(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { articleId } = useParams();
 
   const [name, setName] = useState("");
-  const [shortDesc, setShortDesc] = useState("");
-  const [description, setDescription] = useState("");
-  const [categoryArticleId, setCategoryArticleId] = useState("");
-  // const [isHot, setIsHot] = useState(true);
-  const [isActive, setIsActive] = useState(false);
+  const [shortDescription, setShortDescription] = useState("");
+  const [content, setContent] = useState("");
+  const [categoryArticleId, setCategoryArticleId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [image, setImage] = useState("");
-  const changeHandlerFile = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
+  const [imagePathArticle, setImagePathArticle] = useState("");
 
   useEffect(() => {
     dispatch(getListCategoryArticle());
   }, []);
 
-  const listCate = useSelector(
+  const listCategory = useSelector(
     (state) => state.categoryArticle.listCategoryArticle
   );
 
   useEffect(() => {
-    dispatch(getArticleById(+articleId));
+    dispatch(getArticleById(Number(articleId)));
   }, []);
 
   const findItem = useSelector((state) => state.article.article);
@@ -49,36 +43,28 @@ function EditArticle(props) {
   useEffect(() => {
     if (findItem) {
       setName(findItem.name);
-      setShortDesc(findItem.shortDesc);
-      setDescription(findItem.description);
+      setContent(findItem.content);
+      setShortDescription(findItem.shortDescription);
       setCategoryArticleId(findItem.categoryArticle?.id);
-      // setIsHot(findItem.isHot);
-      setIsActive(findItem.isActive);
-      setImage(findItem.image);
+      setImagePathArticle(findItem.imagePath)
     }
   }, [findItem]);
 
+  const changeHandlerFile = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const form = {
-    //   name,
-    //   shortDesc,
-    //   description,
-    //   categoryArticleId,
-    //   isHot,
-    //   isActive,
-    // };
-
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("shortDesc", shortDesc);
-    formData.append("description", description);
-    formData.append("categoryArticleId", categoryArticleId);
-    // formData.append("isHot", isHot);
-    formData.append("isActive", isActive);
-    if (selectedFile !== null) formData.append("image", selectedFile);
 
-    await dispatch(updateArticle(+articleId, formData));
+    formData.append("name", name);
+    formData.append("shortDescription", shortDescription);
+    formData.append("content", content);
+    formData.append("categoryArticleId", categoryArticleId);
+    if (selectedFile !== null) formData.append("imagePath", selectedFile);
+
+    await dispatch(updateArticle(articleId ,formData));
 
     history.goBack();
   };
@@ -86,143 +72,89 @@ function EditArticle(props) {
   return (
     <>
       <Layout>
-        <div className="content-wrapper">
-          <div className="row">
-            <div className="col-md-12 grid-margin stretch-card ">
-              <div className="card">
-                <div className="card-body">
-                  <h3 className="card-title text-center">Cập nhật bài viết</h3>
-                  {/* <p className="card-description">Basic form layout</p> */}
-                  <form className="forms-sample" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <label htmlFor="name">Tiêu đề</label>
-                      <input
-                        type="text"
-                        name="name"
-                        className="form-control"
-                        id="name"
-                        placeholder=""
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="exampleFormControlSelect2">
-                        Danh mục bài viết
-                      </label>
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        name="categoryArticleId"
-                        onChange={(e) => setCategoryArticleId(e.target.value)}
-                        value={categoryArticleId}
-                        required
-                      >
-                        <option value={""} hidden>
-                          --chọn danh mục--
-                        </option>
-                        {listCate?.map((item) => (
-                          <option value={item.id}>{item.name}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="shortDesc">Mô tả ngắn</label>
-                      <textarea
-                        class="form-control"
-                        id="shortDesc"
-                        rows="4"
-                        name="shortDesc"
-                        value={shortDesc}
-                        onChange={(e) => setShortDesc(e.target.value)}
-                        required
-                      >
-                        {shortDesc}
-                      </textarea>
-                    </div>
-
-                    {/* <div class="form-group">
-                      <label for="description">Mô tả</label>
-                      <textarea
-                        class="form-control"
-                        id="description"
-                        rows="4"
-                        name="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                      >
-                        {description}
-                      </textarea>
-                    </div> */}
-                    <div for="specification">Nội dung</div>
-
-                    <SunEditor
-                      onChange={(content) => setDescription(content)}
-                      setContents={description}
-                      name="description"
-                      setOptions={{
-                        height: 800,
-                        buttonList: buttonList.complex,
-                      }}
+        <div className="row">
+          <div className="col-md-2"></div>
+          <div className="col-md-8">
+            <div className="box ">
+              <div className="box-header with-border">
+                <h3 className=" text-center">Thêm bài viết</h3>
+                <form className="forms-sample " onSubmit={handleSubmit}>
+                  <div className="form-group col-12">
+                    <label htmlFor="name">Tên bài viết</label>
+                    <input
+                      type="text"
+                      name="name"
+                      className="form-control"
+                      id="name"
+                      placeholder=""
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
                     />
+                  </div>
 
-                    <div className="form-group col-12">
-                      <img src={image}></img>
-                      <label style={{ display: "block" }}>Hình ảnh chính</label>
-                      <input
-                        type="file"
-                        name="image"
-                        className=""
-                        onChange={(event) =>
-                          setSelectedFile(event.target.files[0])
-                        }
-                        // required
-                      />
-                    </div>
+                  <div className="form-group col-6">
+                    <label htmlFor="brand">Danh mục bài viết</label>
+                    <select
+                      className="form-control"
+                      name="categoryId"
+                      onChange={(e) => setCategoryArticleId(e.target.value)}
+                      value={categoryArticleId}
+                      required
+                    >
+                      <option value={""} hidden>
+                        --chọn danh mục--
+                      </option>
+                      {listCategory?.map((item) => {
+                        return <option value={item.id}>{item.name}</option>;
+                      })}
+                    </select>
+                  </div>
 
-                      {/* <div class="form-group">
-                      <p class="">bài viết HOT</p>
-                    
-                      <label className="switch switch-default switch-pill switch-danger mr-2">
-                        <input
-                          type="checkbox"
-                          className="switch-input"
-                          name="isHot"
-                          value={isHot}
-                          onChange={() => setIsHot(!isHot)}
-                          checked={isHot}
-                        />
-                        <span className="switch-label" />
-                        <span className="switch-handle" />
-                      </label>
-                    </div> */}
+                  <div className="form-group col-12">
+                    <label for="shortDesc">Mô tả ngắn</label>
+                    <textarea
+                      class="form-control"
+                      id="shortDesc"
+                      rows="4"
+                      name="shortDesc"
+                      value={shortDescription}
+                      onChange={(e) => setShortDescription(e.target.value)}
+                      required
+                    >
+                      {shortDescription}
+                    </textarea>
+                  </div>
 
-                    <div class="form-group">
-                      <p class="">kích hoạt</p>
-                      <label className="switch switch-default switch-pill switch-success mr-2">
-                        <input
-                          type="checkbox"
-                          className="switch-input"
-                          name="isActive"
-                          value={isActive}
-                          onChange={() => setIsActive(!isActive)}
-                          checked={isActive}
-                        />
-                        <span className="switch-label" />
-                        <span className="switch-handle" />
-                      </label>
-                    </div>
+                  <div for="specification">Mô tả</div>
 
-                    <button type="submit" className="btn btn-primary mr-2">
-                      Cập nhật
-                    </button>
-                    {/* <button className="btn btn-light">Hủy</button> */}
-                  </form>
-                </div>
+                  <SunEditor
+                    onChange={(content) => setContent(content)}
+                    setContents={content}
+                    name="content"
+                    setOptions={{
+                      height: 500,
+                      buttonList: buttonList.complex,
+                    }}
+                  />
+
+                  <div className="form-group col-12">
+                    <label style={{ display: "block" }}>Hình ảnh</label>
+                    <img src={imagePathArticle} alt="ảnh bài viết" className="d-block" style={{width:100, marginBottom: 10}} />
+                    <input
+                      type="file"
+                      name="imyy"
+                      className=""
+                      onChange={changeHandlerFile}
+                      
+                    />
+                  </div>
+
+                  <div className="col-4"></div>
+                  <button type="submit" className="btn btn-primary mr-2">
+                    Thêm
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -232,4 +164,4 @@ function EditArticle(props) {
   );
 }
 
-export default EditArticle;
+export default AddArticle;

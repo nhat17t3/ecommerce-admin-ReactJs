@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { updateUser } from "../../../actions";
-
 
 function UserItem(props) {
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const { user, onEditClick, onDeleteClick, onViewClick } = props;
-  
-  const [isActive, setIsActive] = useState(user.isActive);
 
-  useEffect(() => {
-    setIsActive(user.isActive)
-  }, [user.isActive])
-  
+  // const [isActive, setIsActive] = useState(user.isActive);
+  // useEffect(() => {
+  //   setIsActive(user.isActive)
+  // }, [user.isActive])
 
   const handleEditClick = () => {
     if (onEditClick) onEditClick(user);
@@ -28,40 +24,38 @@ function UserItem(props) {
     if (onViewClick) onViewClick(user);
   };
 
-  const handleActiveClick = () => {
-    const a = [];
-    user.roles?.forEach(element => {
-      a.push(element.name)
-    });
-    const form = {
-      username : user.usename,
-      email : user.email,
-      password : user.password,
-      firstName : user.firstName,
-      lastName : user.lastName,
-      phone : user.phone,
-      roles : a,
-      isActive : !isActive
-      };
-    console.log(form,"edit");
-    // alert(JSON.stringify(k));
+  // const handleActiveClick = async () => {
+  //   const formData = new FormData();
+  //   formData.append("name", user.name);
+  //   await dispatch(updateUser(Number(user.id), formData));
+  // };
+  // // const handleActiveClick = () => {
+  // //   const form = {
+  // //     id: Number(user.id),
+  // //     name : user.name,
+  // //     description : user.description,
+  // //     isActive : !isActive
+  // //     };
+  // //   console.log(form);
+  // //   // alert(JSON.stringify(k));
 
-    dispatch(updateUser(+user.id,form));
-  };
+  // //   dispatch(updateUser(form));
+  // //   // history.push("/users/list");
+  // // };
 
   return (
     <>
       <tr key={user.id}>
         <td>{user.id}</td>
-        <td>{user.firstName} </td>
-        <td>{user.lastName} </td>
-        <td>{user.email} </td>
-        <td>{user.phone} </td>
-        <td>
-        <label className="switch switch-default switch-pill switch-success mr-2">
+        <td>{user.name}</td>
+        <td>{user.phone}</td>
+        <td>{user.email}</td>
+        <td>{user.status} </td>
+
+        {/* <td>
+          <label class="toggle-switch toggle-switch-success" >
             <input
               type="checkbox"
-              className="switch-input"
               name="isActive"
               value={isActive}
               onChange={() => {
@@ -70,22 +64,21 @@ function UserItem(props) {
               }}
               checked={isActive}
             />
-            <span className="switch-label" />
-            <span className="switch-handle" />
+            <span class="toggle-slider round"></span>
           </label>
-        </td>
+        </td> */}
 
         <td>
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center ">
             <button
               type="button"
-              className="btn btn-success btn-sm btn-icon-text mr-1"
-              onClick={handleEditClick}
+              className="btn btn-success btn-sm btn-icon-text"
+              style={{ marginRight: "8px" }}
+              onClick={handleViewClick}
             >
               View
               <i className="typcn typcn-edit btn-icon-append" />
             </button>
-            {user.roles[0].id ==1 ? null :
             <button
               type="button"
               className="btn btn-danger btn-sm btn-icon-text"
@@ -94,7 +87,6 @@ function UserItem(props) {
               Delete
               <i className="typcn typcn-delete-outline btn-icon-append" />
             </button>
-            }
           </div>
         </td>
       </tr>

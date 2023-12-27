@@ -1,40 +1,24 @@
 import { combineReducers } from "redux";
+import articleReducer from "./article.reducers";
 import authReducer from "./auth.reducers";
+import categoryReducer from "./category.reducers";
+import categoryArticleReducer from "./categoryArticle.reducers";
+import orderReducer from "./order.reducers";
 import paymentReducer from "./payment.reducers";
-import brandReducer from "./brand.reducers"
-import categoryReducer from "./category.reducers"
 import productReducer from "./product.reducers";
-import slideReducer from "./slice.reducers"
-import feedbackReducer from "./feedback.reducers"
-import transporterReducer from "./transporter.reducers"
-import voucherReducer from "./voucher.reducers"
-import categoryArticleReducer from "./categoryArticle.reducers"
-import articleReducer from "./article.reducers"
-import ratingReducer from "./rating.reducers"
-import favouriteReducer from "./favourite.reducers"
-import orderReducer from "./order.reducers"
-import userReducer from "./user.reducers"
-import transportReducer from "./transport.reducers"
-import statisticsReducer from "./statistics.reducers"
+import statisticsReducer from "./statistics.reducers";
+import userReducer from "./user.reducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  payment : paymentReducer,
-  brand : brandReducer,
-  category : categoryReducer,
-  product : productReducer,
-  slide : slideReducer,
-  feedback : feedbackReducer,
-  transporter : transporterReducer,
-  voucher : voucherReducer,
-  categoryArticle : categoryArticleReducer,
-  article : articleReducer,
-  rating : ratingReducer,
-  favourite : favouriteReducer,
-  order : orderReducer,
-  user : userReducer,
-  transport : transportReducer,
-  statistics : statisticsReducer
+  payment: paymentReducer,
+  category: categoryReducer,
+  product: productReducer,
+  categoryArticle: categoryArticleReducer,
+  article: articleReducer,
+  order: orderReducer,
+  user: userReducer,
+  statistics: statisticsReducer,
 });
 
 export default rootReducer;

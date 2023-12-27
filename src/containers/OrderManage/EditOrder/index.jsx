@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-// import MultiSelect from "react-multi-select-component";
+import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getListCategoryOrder, getListPayment, getListProductByPage, getProductById, getUserById } from "../../../actions";
 import {
-  getOrderById,updateOrder
+  getOrderById,
+  updateOrderStatus,
 } from "../../../actions/order.actions";
 import Layout from "../../../components/Layout";
-import Moment from "react-moment";
-
 
 EditOrder.propTypes = {};
 
@@ -19,226 +17,199 @@ function EditOrder(props) {
   const history = useHistory();
   const { orderId } = useParams();
 
-//   const [ isConfirm, setIsConfirm] = useState(false);
-//   const [ isPay, setIsPay] = useState(false);
-//   const [ isCancle, setIsCancle] = useState(false);
-  const [ render, setRender] = useState(false);
-  
+  const [orderStatus, setOrderStatus] = useState("");
+  const [trackingNumber, setTrackingNumber] = useState(null);
+  const [render, setRender] = useState(false);
+
   useEffect(() => {
-      dispatch(getOrderById(+orderId));
-    }, []);
+    dispatch(getOrderById(+orderId));
+  }, []);
 
-    const findItem = useSelector((state) => state.order.order);
+  const findItem = useSelector((state) => state.order.order);
 
-    
-
-
-    
-    //   useEffect(() => {
-    //     dispatch(getListPayment());
-    //   }, []);
-
-    //   const listPayment = useSelector((state)=> state.payment.listPayment)
-    // const payment = listPayment?.find((e)=>e.id===findItem.paymentId)
-//   useEffect(() => {
-//     dispatch(getProductById(findItem.orderDetails?.id?.productId));
-//   }, [findItem]);
-
-//   useEffect(() => {
-//     if (findItem) {
-//       setIsConfirm(findItem.isConfirm);
-//       setIsPay(findItem.isPay);
-//       setIsCancle(findItem.isCancle);
-//     }
-//   }, [findItem]);
-
-  const handleConfirm = async (e) => {
-    const form = {
-      isConfirm : true,
-      status :1,
-      isPay : false,
-      isCancle : false,
-      isDone : false
-    };
-    await dispatch(updateOrder(+orderId,form));
-    setRender(!render);
-    // history.goBack();
+  const createTrackingforOrder = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("trackingNumber", trackingNumber);
+    formData.append("courierCode", "spx-vn");
+    // dispatch(createTrackingforOrder(formData));
   };
 
-  const handleShip = async (e) => {
-    const form = {
-      isConfirm : true,
-      status :2,
-      isPay : false,
-      isCancle : false,
-      isDone : false
-    };
-    await dispatch(updateOrder(+orderId,form));
-    setRender(!render);
-    // history.goBack();
+  const handleCancelOrder = async (e) => {
+    const formData = new FormData();
+    formData.append("status", "cancle");
+    await dispatch(updateOrderStatus(+orderId, formData));
   };
-  const handleSucess = async (e) => {
-    const form = {
-      isDone : true,
-      status : 3,
-      isPay : true,
-      isCancle : false,
-      isConfirm : false
-    };
-    await dispatch(updateOrder(+orderId,form));
-    setRender(!render);
-    // history.goBack();
-  };
-
-  const handleCancel = async (e) => {
-    const form = {
-      isCancle : true,
-      status : 4,
-      isPay : false,
-      isConfirm : false,
-      isDone : false
-    };
-    await dispatch(updateOrder(+orderId,form));
-    setRender(!render);
-  
-    // history.goBack();
-  };
-
 
   return (
     <>
       <Layout>
-        <div className="content-wrapper">
+        <div className="box p-3 mb-3">
           <div className="row">
-            <div className="col-md-10 grid-margin stretch-card offset-md-1">
-              <div className="card">
-                <div className="card-body">
-                  <h3 className="text-center">Xem đơn hàng</h3>
-                  {/* <p className="card-description">Basic form layout</p> */}
-                  <div className="card-body">
-  <header className="row">
-    <div className="col-10">
-      <h6 className="mb-0">Order ID: {findItem.id} <i className="dot" />  
-        <span className=""> {findItem.status == 0 ? <span class="badge bg-warning">Chờ xác nhận</span> :
-        findItem.status == 1 ? <span class="badge bg-primary">Đã xác nhận</span> :
-        findItem.status == 2 ? <span class="badge bg-info">Đang giao hàng</span> :
-        findItem.status == 3 ? <span class="badge bg-success">Thành công</span> :
-        <span class="badge bg-danger">Đã hủy</span>}</span>
-      </h6>
-      <span className="text-muted">Ngày đặt hàng: 
-      <Moment format="YYYY/MM/DD HH:mm">
-                                    {findItem.createdAt}
-                                  </Moment></span>
-    </div>
-   
-    <div className="dropdown me-auto" id="order-page">
-    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Thao tác
-  </button>
-  {findItem.status == 0 ?
-  <div  className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{}}>
-  <button className="dropdown-item" href="#" onClick={handleConfirm}>Xác nhận đơn hàng</button>
-  <button className="dropdown-item" href="#"  onClick={handleCancel}>Hủy đơn hàng</button>
-</div>
-:
-findItem.status == 1?
-<div className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{}}>
-   <button className="dropdown-item" href="#" onClick={handleShip}> giao hàng</button>
-   <button className="dropdown-item" href="#"  onClick={handleCancel}>Hủy đơn hàng</button>
-</div> :
-findItem.status== 2 ?
-<div className="dropdown-menu" aria-labelledby="dropdownMenuButton" style={{}}>
-   <button className="dropdown-item" href="#"  onClick={handleSucess}>Xác nhận giao hàng thành công</button>
-   {/* <button className="dropdown-item" href="#"  onClick={handleCancel}>Hủy đơn hàng</button> */}
-</div>
-:
-null}
+            <div className="col-12">
+              <h4>
+                <i className="fas fa-globe" /> Ngày đặt hàng:{" "}
+                <Moment format="YYYY/MM/DD HH:mm">{findItem?.createdAt}</Moment>
+              </h4>
+            </div>
+          </div>
+          <div className="row invoice-info">
+            <div className="col-sm-4 invoice-col">
+              From
+              <address>
+                <strong>Hoàng Long Nhật Shop</strong>
+                <br />
+                Triệu Sơn, Triệu Phong
+                <br />
+                Quảng Trị
+                <br />
+                Phone: 0369621657
+                <br />
+                Email: hoanglongnhat0605@gmail.com
+              </address>
+            </div>
+            <div className="col-sm-4 invoice-col">
+              To
+              <address>
+                <strong>{findItem.nameReceiver}</strong>
+                <br />
+                {findItem.addressReceiver}
+                <br />
+                Phone: {findItem.phoneReceiver}
+                <br />
+                Email: {findItem.emailReceiver}
+              </address>
+            </div>
+            <div className="col-sm-4 invoice-col">
+              <br />
+              <b>Order ID:</b> {findItem.id}
+              <br />
+              <b>Trạng thái đơn hàng:</b> {findItem.orderStatus}
+              <br />
+              <b>Trạng thái thanh toán:</b> {findItem.paymentStatus}
+              <br />
+              <b>Phương thức thanh toán:</b> {findItem.paymentMethod?.name}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 table-responsive">
+              <table className="table ">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>số lượng</th>
+                    <th>tổng tiền</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {findItem.orderDetails?.map((element, index) => (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>
+                        <img
+                          src={element.product?.images[0]?.imagePath}
+                          className="img-sm img-thumbnail"
+                        />
+                      </td>
+                      <td>{element.product?.name}</td>
+                      <td>{element.quantity}</td>
+                      <td>{element.price * element.quantity} VNĐ</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-6">
+              <p className="lead">Thành tiền</p>
+              <div className="table-responsive">
+                <table className="table">
+                  <tbody>
+                    <tr>
+                      <th style={{ width: "50%" }}>Subtotal:</th>
+                      <td>{findItem.totalPrice}</td>
+                    </tr>
 
-    </div>
-  </header>
-  <hr />
-  <div className="row">
-
-    <div className="col-lg-8 border-start">
-      <p className="mb-0">Thông tin nhận hàng</p>
-      <p className="m-0">Họ tên: {findItem.nameReceiver} <br /> 
-       Số điện thoại: {findItem.phoneReceiver} <br />
-       Email: {findItem.emailReceiver}  <br />
-       Địa chỉ:  {findItem.addressReceiver} </p>
-    </div> {/* col.// */}
-    <div className="col-lg-4 border-start">
-      <p className="mb-0 text-muted">Hình thức thanh toán</p>
-      <p className="m-0">
-        <span className="text-danger"> {findItem.payment?.name} </span> <br /> 
-       
-      </p>
-    </div> {/* col.// */}
-  </div> {/* row.// */}
-  <hr />
-  <div className="row">
-<div className="col-8">
-<div className="row">
-  <div className="col-12 table-responsive">
-    <table className="table ">
-      <thead>
-        <tr>
-          <th>STT</th>
-          <th>Ảnh</th>
-          <th>Tên sản phẩm</th>
-          <th>số lượng</th>
-          <th>tổng tiền</th>
-        </tr>
-      </thead>
-      <tbody>
-      {findItem.orderDetails?.map((element, index)=> 
-        <tr>
-          <td>{index +1}</td>
-          <td><img src={"http://localhost:8080/files/" + element.product.image} className="img-sm img-thumbnail" /></td>
-          <td>{element.product?.name}</td>
-          <td>{element.quantity}</td>
-          <td>{element.promotionPrice * element.quantity} VNĐ</td>
-        </tr>
-        )}
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-  
-  <div className="col-4">
-  <div className="card">
-  <div className="card-body">
-    <dl className="dlist-align">
-      <dt>Giá sản phẩm:</dt>
-      <dd className="text-end">{findItem.total-findItem.shippingFee + findItem.discount} VNĐ</dd>
-    </dl>
-    <dl className="dlist-align">
-      <dt>phí vận chuyển</dt>
-      <dd className="text-end text-danger"> + {findItem.shippingFee} VNĐ</dd>
-    </dl>
-    <dl className="dlist-align">
-      <dt>Giảm giá</dt>
-      <dd className="text-end text-success">- {findItem.discount} VNĐ</dd>
-    </dl>
-    <hr />
-    <dl className="dlist-align">
-      <dt>Tổng cộng:</dt>
-      <dd className="text-end text-dark h5"> {findItem.total} VNĐ </dd>
-    </dl>
-
-  </div> {/* card-body.// */}
-</div>
-
-  </div>
-  </div>
-</div>
-
-                
-
-                 
-                
-                </div>
+                    <tr>
+                      <th>Shipping:</th>
+                      <td>30.000</td>
+                    </tr>
+                    <tr>
+                      <th>Total:</th>
+                      <td>{findItem.totalPrice + 30000}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+            </div>
+            <div className="col-6">
+              <div className="box box-info">
+                <div className="box-header with-border">
+                  <h3 className="box-title">Tracking Order</h3>
+                </div>
+                <form
+                  className="form-horizontal"
+                  onSubmit={createTrackingforOrder}
+                >
+                  <div className="box-body">
+                    <div className="form-group">
+                      <label
+                        htmlFor="inputEmail3"
+                        className="col-sm-4 control-label"
+                      >
+                        Số phiếu vận chuyển
+                      </label>
+                      <div className="col-sm-8">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputEmail3"
+                          placeholder="Tracking number"
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label
+                        htmlFor="inputPassword3"
+                        className="col-sm-4 control-label"
+                      >
+                        Mã nhà vận chuyển
+                      </label>
+                      <div className="col-sm-8">
+                        <select
+                          className="form-control"
+                          name="courierCode"
+                          required
+                        >
+                          <option value={"spx-vn"}>Shoppe express</option>;
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="box-footer">
+                    <button type="submit" className="btn btn-info pull-right">
+                      Tạo tracking
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div className="row no-print">
+            <div className="">
+              <button
+                type="button"
+                className="btn btn-danger me-3"
+                onClick={handleCancelOrder}
+              >
+                Hủy đơn hàng
+              </button>
+              <button type="button" className="btn btn-success">
+                ... đơn hàng
+              </button>
             </div>
           </div>
         </div>

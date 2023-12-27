@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createCategory } from "../../../actions/category.actions";
+import {
+  createCategory,
+  getListCategory,
+} from "../../../actions/category.actions";
 import Layout from "../../../components/Layout";
-import { getListCategory } from "../../../actions/category.actions";
 
 AddCategory.propTypes = {};
 
@@ -18,8 +20,6 @@ function AddCategory(props) {
   useEffect(() => {
     dispatch(getListCategory());
   }, []);
-
-  const listCate = useSelector((state) => state.category.listCategory);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,67 +37,31 @@ function AddCategory(props) {
   return (
     <>
       <Layout>
-        <div className="content-wrapper">
-          <div className="row">
-            <div className="col-md-6 grid-margin stretch-card offset-md-3">
-              <div className="card">
-                <div className="card-body">
-                  <h3 className="card-title text-center">Thêm danh mục</h3>
-                  {/* <p className="card-description">Basic form layout</p> */}
-                  <form className="forms-sample" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <label htmlFor="name">Tên danh mục</label>
-                      <input
-                        type="text"
-                        name="name"
-                        className="form-control"
-                        id="name"
-                        placeholder=""
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                      />
-                    </div>
-                    {/* <div className="form-group">
-                      <label htmlFor="exampleFormControlSelect2">
-                        Danh mục cha
-                      </label>
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        name="parentId"
-                        onChange={(e) => setParentId(e.target.value)}
-                        value={parentId}
-                      >
-                        <option value={0}>khong có gì</option>
-                        {listCate?.map((item) => (
-                          <option value={item.id}>{item.name}</option>
-                        ))}
-                      </select>
-                    </div> */}
+        <div className="row">
+          <div className="col-md-3"></div>
+          <div className="col-md-6">
+            <div className="box ">
+              <div className="box-header with-border">
+                <h3 className="card-title text-center">Thêm danh mục</h3>
+                <form className="forms-sample" onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="name">Tên danh mục</label>
+                    <input
+                      type="text"
+                      name="name"
+                      className="form-control"
+                      id="name"
+                      placeholder=""
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
+                  </div>
 
-                    {/* <div class="form-group">
-                      <p class="">Kích hoạt</p>
-                      <label className="switch switch-default switch-pill switch-success mr-2">
-                        <input
-                          type="checkbox"
-                          className="switch-input"
-                          name="isActive"
-                          value={isActive}
-                          onChange={() => setIsActive(!isActive)}
-                          checked={isActive}
-                        />
-                        <span className="switch-label" />
-                        <span className="switch-handle" />
-                      </label>
-                    </div> */}
-
-                    <button type="submit" className="btn btn-primary mr-2">
-                      Thêm
-                    </button>
-                    {/* <button className="btn btn-light">Hủy</button> */}
-                  </form>
-                </div>
+                  <button type="submit" className="btn btn-primary mr-2">
+                    Thêm
+                  </button>
+                </form>
               </div>
             </div>
           </div>

@@ -3,95 +3,41 @@ import Stack from "@mui/material/Stack";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import {
-  deleteOrder,
-  filterOrderByStatus,
-  getListOrderByPage,
-  searchListOrderByName,
-} from "../../../actions";
+import { deleteOrder, getListOrderByPage, updateAllOrderStatusFromTracking } from "../../../actions";
 import Layout from "../../../components/Layout";
-import orderReducers from "../../../reducers/order.reducers";
 import OrderItem from "../OrderItem";
 
 ListOrder.propTypes = {};
-
-function useQuery() {
-  const { search } = useLocation();
-
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
 
 function ListOrder(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [searchFeild, setSearchFeild] = useState("");
   const [reRender, setReRender] = useState(true);
-  const [addSearch, setAddSearch] = useState(true);
-  const [orderStatus, setOrderStatus] = useState("5");
 
-  let query = useQuery();
-
-  const [currentPage, setCurrentPage] = useState(
-    Number(query.get("page")) || 1
-  );
-  const limit = 5;
+  const [searchFeild, setSearchFeild] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
-    // if (searchFeild === ""){
+    const formData = new FormData();
+    formData.append("pageNumber", currentPage - 1);
+    formData.append("pageSize", 10);
+    console.log("formData111", formData);
+    dispatch(getListOrderByPage(formData));
+  }, [currentPage]);
 
-    //   if(orderStatus!="all"){
-    //     dispatch(filterOrderByStatus(Number(orderStatus),5,currentPage - 1))
-    //   }
-    //   else dispatch(getListOrderByPage(limit, currentPage - 1));
-    // }      
-    // else {
-    //   setOrderStatus("all");
-    //   dispatch(searchListOrderByName(searchFeild, limit, currentPage - 1));
-    // }
-
-    dispatch(searchListOrderByName(searchFeild,orderStatus, limit, currentPage - 1));
-    
-  }, [currentPage, orderStatus, addSearch]);
-
+  const orderStore = useSelector((state) => state.order);
   const orders = useSelector((state) => state.order.listOrder);
-  const count = useSelector((state) => state.order.count);
-  var countPage = Math.ceil(count / limit);
 
-  const handlePageChange = (event, pageNumber) => {
+  const handlePageChange = async (event, pageNumber) => {
     console.log(pageNumber, "page");
     setCurrentPage(pageNumber);
-    history.push(`?page=${pageNumber}`);
   };
-
-  //  const checkfilter = (subject, grade, address, order) => {
-  //   let checka = false;
-  //   let checkb = false;
-  //   let checkc = false;
-  //   if (subject == "All") checka = true;
-  //   else checka = order.subject === subject;
-  //   if (grade == "All") checkb = true;
-  //   else checkb = order.grade === grade;
-  //   if (address == "All") checkc = true;
-  //   else checkc = order.address.toLowerCase().includes(address.toLowerCase());
-  //   return checka && checkb && checkc;
-  // };
-
-  // const handlefillter = (e) => {
-  //   console.log(subject, grade, address);
-
-  //   const listfillter = orders.filter((tutor) =>
-  //     checkfilter(subject, grade, address, tutor)
-  //   );
-  //   console.log(listfillter);
-  //   setListorder(listfillter);
-  // };
 
   const handleEditClick = (item) => {
     console.log("Edit: ", item);
     const editUrl = `/orders/edit/${item.id}`;
-    // const editUrl = `/orders/add`;
-
     history.push(editUrl);
   };
 
@@ -104,141 +50,122 @@ function ListOrder(props) {
   const handleDeleteClick = async (item) => {
     console.log("delete: ", item);
     await dispatch(deleteOrder(item));
-    await dispatch(getListOrderByPage(limit, currentPage - 1));
+    const formData = new FormData();
+    formData.append("pageNumber", currentPage - 1);
+    formData.append("pageSize", pageSize);
+    await dispatch(getListOrderByPage(formData));
     setReRender(!reRender);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
     setCurrentPage(1);
-    // console.log(searchFeild, "search");
-    // if(searchFeild.trim()!= ""){
-    //   // history.push(`?search=${searchFeild}&page=${1}`); 
-    //   dispatch(searchListOrderByName(searchFeild, limit, 0));
 
-    // } 
-    // else {
-    //   dispatch(getListOrderByPage(limit, 0));
-    //   history.push('/orders/list')
-    // }
-
-    setAddSearch(!addSearch);
+    const formData = new FormData();
+    formData.append("pageNumber", currentPage - 1);
+    formData.append("pageSize", pageSize);
+    formData.append("inputSearch", searchFeild);
+    // formData.append("orderStatus", "delivered");
+    // formData.append("ePaymentStatus", "PAID");
+    dispatch(getListOrderByPage(formData));
   };
+  const handleUpdateAllStatusTracking = (e) => {
+    e.preventDefault();
+    dispatch(updateAllOrderStatusFromTracking());
+  };
+
+  
   return (
     <>
       <Layout>
-        <div className="content-wrapper">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="card">
-                <div className="card-body ">
-                  <h1 className="card-title text-center">Quản lí đơn hàng</h1>
-                  <div
-                    className="navbar-menu-wrapper d-flex align-items-center"
-                    style={{ justifyContent: "space-between" }}
+        <div className="row">
+          <div className="col-md-12">
+            <div className="box">
+              <div className="box-header with-border">
+                <h1 className="card-title text-center">Quản lí đơn hàng</h1>
+              </div>
+              <div className="box-header with-border row">
+                <div className="col-sm-6">
+                  <button onClick={handleUpdateAllStatusTracking} className="btn btn-info">
+                    Cập nhật trạng thái đơn hàng
+                  </button>
+                </div>
+                <div className="col-sm-6">
+                  <form
+                    style={{ marginLeft: "100px" }}
+                    id="example1_filter"
+                    className="dataTables_filter"
+                    onSubmit={handleSearch}
                   >
-                    {/* <Link to={"/orders/add"} className="btn btn-info">
-                      Thêm bài viết
-                    </Link> */}
-
-                    <ul class="navbar-nav navbar-nav-right col-3">
-                      <li class="nav-item nav-search d-none d-md-block mr-0">
-                        <form class="input-group" onSubmit={handleSearch}>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Search..."
-                            aria-label="search"
-                            aria-describedby="search"
-                            name="searchFeild"
-                            id="searchFeild"
-                            value={searchFeild}
-                            onChange={(e) => setSearchFeild(e.target.value)}
-                          />
-                          <div className="input-group-append">
-                            <button
-                              className="btn  btn-primary"
-                              type="submit"
-                            >
-                              Search
-                            </button>
-                          </div>
-                        </form>
-                      </li>
-                    </ul>
-                    <div className="col-6">
-
-                    </div>
-                    <div className="col-3">
-                    <select
-                        className="form-control"
-                        name="orderStatus"
-                        onChange={(e) =>{
-                          setOrderStatus(e.target.value);
-                          // if(e.target.value == "5") dispatch(getListOrderByPage(limit, currentPage - 1));
-                          // else dispatch(filterOrderByStatus(Number(e.target.value),5,currentPage - 1))
-                        } }
-                        value={orderStatus}
-                      >
-                        <option value={"5"}>--All--</option>
-                        <option value={"0"}>Chờ xác nhận</option>;
-                        <option value={"1"}>Chờ giao hàng</option>;
-                        <option value={"2"}>Đang giao hàng</option>;
-                        <option value={"3"}>Thành công</option>;
-                        <option value={"4"}>Đã hủy</option>;
-                        
-                      </select>
-                    </div>
-                    
-                  </div>
-                  <div className="table-responsive pt-3">
-                    <table className="table table-striped project-orders-table table-bordered">
-                      <thead className="thead-dark">
-                        <tr>
-                          <th className="col-1">ID</th>
-                          <th className="">Người đặt hàng</th>
-                          <th className="">Số điện thoại</th>
-                          <th className="col-1">Tổng tiền</th>
-                          <th className="col-1">Trạng thái</th>
-                          <th className="">Ngày đặt</th>
-                          <th className="text-center col-1">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {orders?.map((item) => (
-                          <OrderItem
-                            order={item}
-                            onEditClick={handleEditClick}
-                            onDeleteClick={handleDeleteClick}
-                            onViewClick={handleViewClick}
-                          />
-                        ))}
-                      </tbody>
-                    </table>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "end",
-                        marginTop: "16px",
-                      }}
+                    <label>
+                      <input
+                        type="search"
+                        className="form-control "
+                        placeholder=""
+                        aria-controls="example1"
+                        name="searchFeild"
+                        id="searchFeild"
+                        value={searchFeild}
+                        onChange={(e) => setSearchFeild(e.target.value)}
+                      />
+                    </label>
+                    <button
+                      style={{ position: "absolute", top: "-1px" }}
+                      className="btn btn-primary"
+                      type="submit"
                     >
-                      <Stack spacing={2}>
-                        <Pagination
-                          count={countPage}
-                          color="primary"
-                          page={currentPage}
-                          onChange={handlePageChange}
-                          // renderItem={(item) => (
-                          //   <PaginationItem
-                          //     component={Link}
-                          //     to={`/products/list${item.page === 1 ? '' : `?page=${item.page}`}`}
-                          //     {...item}
-                          //   />
-                          // )}
+                      Search
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div className="box-body">
+                <div className="table-responsive pt-3">
+                  <table className="table table-striped project-orders-table table-bordered">
+                    <thead className="thead-dark">
+                      <tr>
+                        <th style={{ width: 10 }}>ID</th>
+                        <th style={{ width: 100 }}>Tên người nhận</th>
+                        <th style={{ width: 100 }}>SĐT người nhận</th>
+                        <th style={{ width: 100 }}>Tổng tiền</th>
+                        <th style={{ width: 100 }}>Trạng thái thanh toán</th>
+                        <th style={{ width: 100 }}>Trạng thái đơn hàng</th>
+                        <th style={{ width: 100 }}>Ngày đặt</th>
+                        <th
+                          className="text-center col-1"
+                          style={{ width: 140 }}
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders?.map((item) => (
+                        <OrderItem
+                          order={item}
+                          onEditClick={handleEditClick}
+                          onDeleteClick={handleDeleteClick}
+                          onViewClick={handleViewClick}
                         />
-                      </Stack>
-                    </div>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "end",
+                      marginTop: "16px",
+                    }}
+                  >
+                    <Stack spacing={2}>
+                      <Pagination
+                        count={orderStore.totalPages}
+                        color="primary"
+                        page={currentPage}
+                        onChange={handlePageChange}
+                      />
+                    </Stack>
                   </div>
                 </div>
               </div>

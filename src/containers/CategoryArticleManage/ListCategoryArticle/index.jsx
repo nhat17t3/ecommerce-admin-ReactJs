@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import {
   deleteCategoryArticle,
-  getListCategoryArticle
+  getListCategoryArticle,
 } from "../../../actions/categoryArticle.actions";
 import Layout from "../../../components/Layout";
 import CategoryArticleItem from "../CategoryArticleItem";
-
 
 ListCategoryArticle.propTypes = {};
 
@@ -19,62 +18,55 @@ function ListCategoryArticle(props) {
     dispatch(getListCategoryArticle());
   }, []);
 
-  const listCategoryArticle = useSelector((state) => state.categoryArticle.listCategoryArticle);
+  const listCate = useSelector(
+    (state) => state.categoryArticle.listCategoryArticle
+  );
 
   const handleEditClick = (item) => {
     console.log("Edit: ", item);
-    const editUrl = `/categoryArticles/edit/${item.id}`;
+    const editUrl = `/categoty-articles/edit/${item.id}`;
     history.push(editUrl);
   };
 
-  const handleViewClick = (item) => {
-    console.log("View: ", item);
-    const viewUrl = `/categoryArticles/${item.id}`;
-    history.push(viewUrl);
-  };
-
-  const handleDeleteClick =  (item) => {
+  const handleDeleteClick = (item) => {
     console.log("delete: ", item);
-     dispatch(deleteCategoryArticle(item));
+    dispatch(deleteCategoryArticle(item));
   };
 
   return (
     <>
       <Layout>
-        <div className="content-wrapper">
-          <div className="row">
-            <div className="col-md-2"></div>
-            <div className="col-md-8">
-              <div className="card">
-                <div className="card-body ">
-                  <h1 className="card-title text-center">Quản lí danh mục bài viết</h1>
-                  <Link to={"/categoryArticles/add"} className="btn btn-info">
-                    Thêm danh mục
-                  </Link>
-                  <div className="table-responsive pt-3">
-                    <table className="table table-striped project-orders-table">
-                      <thead className="thead-dark">
-                        <tr>
-                          <th className="ml-5">ID</th>
-                          <th>Tên</th>
-                          {/* <th className="col-3">Kích hoạt</th> */}
-                          <th className="col-3">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {listCategoryArticle?.map((item) => (
-                          <CategoryArticleItem
-                            categoryArticle={item}
-                            onEditClick={handleEditClick}
-                            onDeleteClick={handleDeleteClick}
-                            onViewClick={handleViewClick}
-                          />
-                        ))}
-                      </tbody>
-                    </table>
-                    {/*  */}
-                  </div>
-                </div>
+        <div className="row">
+          <div className="col-md-3"></div>
+
+          <div className="col-md-6">
+            <div className="box">
+              <div className="box-header with-border">
+                <h3 className="box-title">Danh mục bài viết</h3>
+              </div>
+              <div className="box-header with-border">
+                <Link to={"/categoty-articles/add"} className="btn btn-info">
+                  Thêm danh mục bài viết
+                </Link>
+              </div>
+              {/* /.box-header */}
+              <div className="box-body">
+                <table className="table table-bordered table-striped dataTable">
+                  <tbody>
+                    <tr>
+                      <th style={{ width: 10 }}>#</th>
+                      <th>Tên danh mục</th>
+                      <th style={{ width: 140 }}></th>
+                    </tr>
+                    {listCate?.map((item) => (
+                      <CategoryArticleItem
+                        categoryArticle={item}
+                        onEditClick={handleEditClick}
+                        onDeleteClick={handleDeleteClick}
+                      />
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

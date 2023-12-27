@@ -8,40 +8,29 @@ export const login = (user) => {
       type: authConstants.LOGIN_REQUEST,
     });
 
-    const res = await axios.post(`/api/auth/signin`, {
+    const res = await axios.post(`/api/auth/login`, {
       ...user,
     });
 
-    try {
-      if (res.status === 201) {
-        const token = res.data.dataResponse;
-        localStorage.setItem("token", token);
-
+    if (res.status === 200) {
+        localStorage.setItem("accessToken", res.data.result.accessToken);
+        localStorage.setItem("refreshToken", res.data.result.refreshToken);
         dispatch({
           type: authConstants.LOGIN_SUCCESS,
           payload: {
-            token: token,
+            accessToken: res.data.result.accessToken,
+            message:res.data.message
           },
         });
 
-        dispatch(getInformation({token}));
-      } else {
-        
+        dispatch(getInformation({accessToken: res.data.result.accessToken}));
+    } else {
           dispatch({
             type: authConstants.LOGIN_FAILURE,
             payload: {
-              error: "login failed",
+              message: res.data.message
             },
           });
-        
-      }
-    } catch (error) {
-      dispatch({
-        type: authConstants.LOGIN_FAILURE,
-        payload: {
-          error: "Server error",
-        },
-      });
     }
   };
 };
@@ -71,21 +60,20 @@ export const login = (user) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    // dispatch({ type: authConstants.LOGOUT_REQUEST });
-    // const res = await axios.post(`/admin/signout`);
-    // console.log("Logout",res)
-    // if (res.status === 200) {
-    //   localStorage.clear();
-    //   dispatch({ type: authConstants.LOGOUT_SUCCESS });
-    // } else {
-    //   dispatch({
-    //     type: authConstants.LOGOUT_FAILURE,
-    //     payload: res.data.error,
-    //   });
-    // }
+    dispatch({ type: authConstants.LOGOUT_REQUEST });
+    const res = await axios.post(`/api/auth/logout`);
+    if (res.status === 200) {
+      localStorage.clear();
+      dispatch({ type: authConstants.LOGOUT_SUCCESS });
+    } else {
+      dispatch({
+        type: authConstants.LOGOUT_FAILURE,
+        payload: {message : res.data.message },
+      });
+    }
 
-    localStorage.clear();
-    dispatch({ type: authConstants.LOGOUT_SUCCESS });
+    // localStorage.clear();
+    // dispatch({ type: authConstants.LOGOUT_SUCCESS });
   };
 };
 
@@ -150,22 +138,23 @@ export const getInformation = (token) => {
   return async (dispatch) => {
     dispatch({ type: authConstants.GET_INFORMATION_REQUEST });
 
-    const res = await axios.post("/api/auth/getInfor", token);
+    const res = await axios.post("/api/auth/getMyUserInfor", token);
 
     if (res.status === 200) {
-      const user = res.data.dataResponse;
+      const user = res.data.result;
       dispatch({
         type: authConstants.GET_INFORMATION_SUCCESS,
         payload: {
           user: user,
+          
         },
       });
     } else {
-      const { message } = res.data.message;
+      const { message } = res.data;
       dispatch({
         type: authConstants.GET_INFORMATION_FAILURE,
         payload: {
-          error: message,
+          message: message,
         },
       });
     }

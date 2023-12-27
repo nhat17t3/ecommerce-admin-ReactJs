@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 // import MultiSelect from "react-multi-select-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getTransportById } from "../../../actions";
 import {
+  getListCategoryArticle,
   updateCategoryArticle,
-  getCategoryArticleById,
 } from "../../../actions/categoryArticle.actions";
 import Layout from "../../../components/Layout";
 
@@ -19,17 +18,27 @@ function EditCategoryArticle(props) {
   const { categoryArticleId } = useParams();
 
   const [name, setName] = useState("");
+  const [parentId, setParentId] = useState(0);
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
-    dispatch(getCategoryArticleById(+categoryArticleId));
+    dispatch(getListCategoryArticle());
   }, []);
 
-  const findItem = useSelector((state) => state.categoryArticle.categoryArticle);
+  const listCate = useSelector(
+    (state) => state.categoryArticle.listCategoryArticle
+  );
+
+  const findItem = useSelector((state) =>
+    state.categoryArticle.listCategoryArticle.find(
+      (x) => x.id === +categoryArticleId
+    )
+  );
 
   useEffect(() => {
     if (findItem) {
       setName(findItem.name);
+      setParentId(findItem.parentId);
       setIsActive(findItem.isActive);
     }
   }, [findItem]);
@@ -37,12 +46,15 @@ function EditCategoryArticle(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = {
+      id: Number(categoryArticleId),
       name,
       isActive,
+      parentId: 0,
     };
+    console.log(form, "edit form");
 
-    dispatch(updateCategoryArticle(Number(categoryArticleId),form));
-    history.goBack();
+    dispatch(updateCategoryArticle(form));
+    history.push("/categories/list");
   };
 
   return (
@@ -53,11 +65,12 @@ function EditCategoryArticle(props) {
             <div className="col-md-6 grid-margin stretch-card offset-md-3">
               <div className="card">
                 <div className="card-body">
-                  <h3 className="card-title text-center">cập nhật danh mục bài viết</h3>
-                  {/* <p className="card-description">Basic form layout</p> */}
+                  <h3 className="mb-3 text-center">
+                    Cập nhật danh mục sản phẩm
+                  </h3>
                   <form className="forms-sample" onSubmit={handleSubmit}>
                     <div className="form-group">
-                      <label htmlFor="name">Tên danh mục</label>
+                      <label htmlFor="name">Tên </label>
                       <input
                         type="text"
                         name="name"
@@ -70,29 +83,9 @@ function EditCategoryArticle(props) {
                       />
                     </div>
 
-                   
-
-                   
-                    {/* <div class="form-group">
-                      <p class="">Kích hoạt</p>
-                      <label className="switch switch-default switch-pill switch-success mr-2">
-                        <input
-                          type="checkbox"
-                          className="switch-input"
-                          name="isActive"
-                          value={isActive}
-                          onChange={() => setIsActive(!isActive)}
-                          checked={isActive}
-                        />
-                        <span className="switch-label" />
-                        <span className="switch-handle" />
-                      </label>
-                    </div> */}
-
                     <button type="submit" className="btn btn-primary mr-2">
                       Cập nhật
                     </button>
-                    {/* <button className="btn btn-light">Hủy</button> */}
                   </form>
                 </div>
               </div>

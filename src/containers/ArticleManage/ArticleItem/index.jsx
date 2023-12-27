@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { updateArticle } from "../../../actions";
-
 
 function ArticleItem(props) {
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const { article, onEditClick, onDeleteClick, onViewClick } = props;
-  
-  // const [isHot, setIsHot] = useState(article.isHot);
-
-  // useEffect(() => {
-  //   setIsHot(article.isHot)
-  // }, [article.isHot])
-  
 
   const handleEditClick = () => {
     if (onEditClick) onEditClick(article);
@@ -28,48 +19,22 @@ function ArticleItem(props) {
     if (onViewClick) onViewClick(article);
   };
 
-  // const handleHotClick = () => {
-  //   const form = {
-  //     name : article.name,
-  //     shortDesc : article.shortDesc,
-  //     description : article.description,
-  //     categoryArticleId : article.categoryArticle?.id,
-  //     isActive : article.isActive,
-  //     isHot : !isHot
-  //     };
-  //   console.log(form,"edit");
-  //   // alert(JSON.stringify(k));
-
-  //   dispatch(updateArticle(+article.id,form));
-  // };
-
   return (
     <>
       <tr key={article.id}>
         <td>{article.id}</td>
-        <td>{article.name} </td>
-        <td >{article.categoryArticle?.name}</td>
-        {/* <td>
-          <label class="toggle-switch toggle-switch-success" >
-            <input
-              type="checkbox"
-              name="isHot"
-              value={isHot}
-              onChange={() => {
-                setIsHot(!isHot);
-                handleHotClick();
-              }}
-              checked={isHot}
-            />
-            <span class="toggle-slider round"></span>
-          </label>
-        </td> */}
+        <td>
+          <img src={article.imagePath} alt="" width={60} height={50} />
+        </td>
+        <td className="text-wrap">{article.name} </td>
+        <td>{article.categoryArticle?.name} </td>
 
         <td>
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center ">
             <button
               type="button"
-              className="btn btn-success btn-sm btn-icon-text mr-3"
+              className="btn btn-success btn-sm btn-icon-text"
+              style={{ marginRight: "8px" }}
               onClick={handleEditClick}
             >
               Edit
